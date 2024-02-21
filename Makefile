@@ -6,7 +6,7 @@
 #    By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/19 12:13:48 by thzeribi          #+#    #+#              #
-#    Updated: 2024/02/21 11:42:54 by thzeribi         ###   ########.fr        #
+#    Updated: 2024/02/21 12:55:52 by thzeribi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,7 @@ DEPS		:=	$(OBJECTS:.o=.d)
 #                                  FLAGS                                       #
 ################################################################################
 
-CFLAGS			:=	-Wall -Wextra -Werror -MMD
+CFLAGS			:=	-Wall -Wextra -Werror -MMD -g
 CC				:=	cc
 LDFLAGS			:=	-L $(LIBFT_FOLDER) -lft \
 					-L $(PATH_MLX) \

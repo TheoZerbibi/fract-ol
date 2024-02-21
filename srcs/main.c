@@ -6,7 +6,7 @@
 /*   By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 22:41:11 by thzeribi          #+#    #+#             */
-/*   Updated: 2024/02/21 12:45:24 by thzeribi         ###   ########.fr       */
+/*   Updated: 2024/02/21 12:52:20 by thzeribi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,8 @@ int	main(int argc, char *argv[])
 	data = (t_data){0};
 	if (!_init_mlx(&data) || !_init_img(&data))
 		exit_init(&data);
-	if (BONUS)
-		printf("\e[1;33mBonus\e[0m\n");
-	printf("\e[1;32mCurrent set : %s\e[0m\n", argv[1]);
-	mlx_loop_hook(data.mlx.mlx, &draw_fractol, &data);
+	if (!BONUS)
+		mlx_loop_hook(data.mlx.mlx, &draw_fractol, &data);
 	draw_fractol(&data);
 	mlx_loop(data.mlx.mlx);
 	_end_mlx(&data, 0);

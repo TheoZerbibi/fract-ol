@@ -30,6 +30,7 @@ mlx-test
 *.vsix
 
 #local test file
+ft_mallocator/
 test.*
 *.DBG.*
 *.BNS.*
