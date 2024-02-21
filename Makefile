@@ -6,7 +6,7 @@
 #    By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/19 12:13:48 by thzeribi          #+#    #+#              #
-#    Updated: 2024/02/21 10:08:03 by thzeribi         ###   ########.fr        #
+#    Updated: 2024/02/21 10:16:44 by thzeribi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -158,7 +158,7 @@ fclean: clean
 	printf "\t\t$(INFO_COLOR)LibFt $(NO_COLOR)Removed $(INFO_COLOR)Libft$(NO_COLOR).\n"
 	rm -f $(NAME)
 	rm -rf $(OBJECTS_FOLDER)
-	rm -f .DBG.* .BN.*
+	rm -f .DBG.* .BNS.*
 	printf "\t\t$(INFO_COLOR)$(PROJECT_NAME) $(NO_COLOR)Removed $(INFO_COLOR)$(NAME)$(NO_COLOR).\n"
 
 re: fclean all
