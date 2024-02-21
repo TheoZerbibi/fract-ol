@@ -1,0 +1,13 @@
+NO ./textures/seg1.xpm
+SO ./textures/seg2.xpm
+WE ./textures/seg1.xpm
+EA ./textures/seg2.xpm
+
+F 30, 30, 30
+C 30, 30, 30
+
+111111
+100001
+100N01
+100101
+111111

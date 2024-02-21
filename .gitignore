@@ -1,0 +1,34 @@
+#binary
+fractol
+*.out
+
+#object files
+objs/
+*.o
+*.d
+output
+
+#vim file
+.*.sw*
+*.vim
+
+#vscode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/c_cpp_properties.json
+!.vscode/*.code-snippets
+
+# Local History for Visual Studio Code
+.history/
+
+# Built Visual Studio Code Extensions
+*.vsix
+
+#local test file
+test.*
+*.DBG.*
+*.BNS.*
+.nfs*

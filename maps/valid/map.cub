@@ -1,0 +1,13 @@
+NO ./textures/space.xpm
+SO ./textures/ahb2.xpm
+WE ./textures/space.xpm
+EA ./textures/ahb1.xpm
+
+F 14, 12, 23
+C 9, 8, 16
+
+111111
+100001
+100S01
+100101
+111111
