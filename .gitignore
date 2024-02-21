@@ -6,7 +6,9 @@ fractol
 objs/
 *.o
 *.d
+*.a
 output
+mlx-test
 
 #vim file
 .*.sw*
