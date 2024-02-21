@@ -6,7 +6,7 @@
 /*   By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 22:41:11 by thzeribi          #+#    #+#             */
-/*   Updated: 2024/02/21 12:28:35 by thzeribi         ###   ########.fr       */
+/*   Updated: 2024/02/21 12:45:24 by thzeribi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ int
 	if (data->set == MANDELBROT)
 		mandelbrot(data);
 	usage_background(data, 0x000222222);
-	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->image.image, 0, 0);
+	mlx_put_image_to_window(data->mlx.mlx, \
+		data->mlx.win, data->image.image, 0, 0);
 	draw_usage(data, 0xEEEEEE);
 	return (0);
 }
-
 
 /**
 ** @name init_fractol_set(); [Static Function]
@@ -56,8 +56,6 @@ static int
 		return (FALSE);
 	return (TRUE);
 }
-
-
 
 /**
 ** @name main();

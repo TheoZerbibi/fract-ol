@@ -6,12 +6,11 @@
 /*   By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 10:44:50 by thzeribi          #+#    #+#             */
-/*   Updated: 2024/02/21 12:14:59 by thzeribi         ###   ########.fr       */
+/*   Updated: 2024/02/21 12:48:25 by thzeribi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-
 
 /**
 ** @name init_mandelbrot(); [Static Function]
@@ -22,9 +21,11 @@ static void
 	init_mandelbrot(t_data *data)
 {
 	data->fractal.math.min_r = -2;
-	data->fractal.math.max_r = data->fractal.math.min_r * -1 * data->win_width / data->win_height;
+	data->fractal.math.max_r = data->fractal.math.min_r * -1 \
+		* data->win_width / data->win_height;
 	data->fractal.math.min_i = -2;
-	data->fractal.math.max_i = data->fractal.math.min_i * -1 * data->win_height / data->win_width;
+	data->fractal.math.max_i = data->fractal.math.min_i * -1 \
+		* data->win_height / data->win_width;
 }
 
 /**
@@ -61,10 +62,10 @@ static int
 	return (1);
 }
 
-
 /**
  ** @name mandelbrot();
- ** @brief Call by draw_fractol() function, this function draw the mandelbrot set.
+ ** @brief Call by draw_fractol() function, this function draw the
+ ** mandelbrot set.
  **
  ** @param t_data *data
  ** @return TRUE [1]
@@ -81,11 +82,15 @@ int
 	y = -1;
 	while (++y < data->win_height)
 	{
-		pi = data->fractal.math.max_i + ((double)y * (data->fractal.math.min_i - data->fractal.math.max_i) / data->win_height);
+		pi = data->fractal.math.max_i + ((double)y \
+			* (data->fractal.math.min_i - data->fractal.math.max_i) \
+			/ data->win_height);
 		x = -1;
 		while (++x < data->win_width)
 		{
-			pr = data->fractal.math.min_r + ((double)x * (data->fractal.math.max_r - data->fractal.math.min_r) / data->win_width);
+			pr = data->fractal.math.min_r + ((double)x \
+				* (data->fractal.math.max_r - data->fractal.math.min_r) \
+				/ data->win_width);
 			if (is_mandelbrot(data, pr, pi) == 0)
 				my_mlx_pixel_put(&data->image, x, y, make_color(data));
 			else

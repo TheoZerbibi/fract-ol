@@ -6,12 +6,11 @@
 /*   By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:05:36 by thzeribi          #+#    #+#             */
-/*   Updated: 2024/02/21 11:24:34 by thzeribi         ###   ########.fr       */
+/*   Updated: 2024/02/21 12:46:13 by thzeribi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-
 
 static void
 	apply_shift(t_data *data)
@@ -38,6 +37,7 @@ static void
 	}
 	return ;
 }
+
 static
 	int	get_red(int color_value)
 {

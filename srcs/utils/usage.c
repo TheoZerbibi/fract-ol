@@ -6,7 +6,7 @@
 /*   By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:36:07 by thzeribi          #+#    #+#             */
-/*   Updated: 2024/02/21 12:36:40 by thzeribi         ###   ########.fr       */
+/*   Updated: 2024/02/21 12:46:42 by thzeribi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void
 	usage_background(t_data *data, int color)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = data->win_width - 270;
 	while (i < data->win_width - 10)
@@ -53,6 +53,3 @@ int
 	// mlx_string_put(mlx, win, x, y + 180, col, "Angle           q e");
 	return (0);
 }
-
-
-
