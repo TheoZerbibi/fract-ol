@@ -6,7 +6,7 @@
 #    By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/19 12:13:48 by thzeribi          #+#    #+#              #
-#    Updated: 2024/02/21 10:16:44 by thzeribi         ###   ########.fr        #
+#    Updated: 2024/02/21 11:42:54 by thzeribi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,10 +34,15 @@ SOURCES := \
 		\
 		mlx/init/mlx_init.c \
 		mlx/init/hook_init.c \
+		mlx/img/img_utils.c \
 		mlx/end/mlx_end.c \
 		mlx/event/key_event.c \
 		mlx/event/mouse_event.c \
 		\
+		sets/mandelbrot.c \
+		\
+		utils/usage.c \
+		utils/colors.c \
 		utils/exit_case.c \
 
 BONUS_SOURCES := \

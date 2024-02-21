@@ -6,7 +6,7 @@
 /*   By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 05:35:19 by thzeribi          #+#    #+#             */
-/*   Updated: 2024/02/21 09:45:14 by thzeribi         ###   ########.fr       */
+/*   Updated: 2024/02/21 12:22:58 by thzeribi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 void
 	setup_hook(t_data *data)
 {
+	
 	mlx_hook(data->mlx.win, KeyPress, KeyPressMask, &keypress, data);
+	// mlx_hook(data->mlx.win, Expose, ExposureMask, &draw_usage, data);
 	mlx_hook(data->mlx.win, 33, (1L << 17), _end_mlx, data);
 }
