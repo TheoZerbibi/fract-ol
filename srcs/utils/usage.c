@@ -6,7 +6,7 @@
 /*   By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:36:07 by thzeribi          #+#    #+#             */
-/*   Updated: 2024/02/21 12:46:42 by thzeribi         ###   ########.fr       */
+/*   Updated: 2024/02/22 06:19:18 by thzeribi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ int
 	win = data->mlx.win;
 	x = data->win_width - 250;
 	mlx_string_put(mlx, win, x - 15, y + 10, col, "Usage");
-	mlx_string_put(mlx, win, x, y + 35, col, "Disable usage   space");
-	// mlx_string_put(mlx, win, x, y + 55, col, "Move            < ^ v >");
+	mlx_string_put(mlx, win, x, y + 35, col, "Disable usage        SPACE");
+	mlx_string_put(mlx, win, x, y + 55, col, "Change color shift   SHIFT");
 	// mlx_string_put(mlx, win, x, y + 80, col, "Move            q w a d");
 	// mlx_string_put(mlx, win, x, y + 105, col, "Zoom            + -");
 	// mlx_string_put(mlx, win, x, y + 130, col, "Scale up        page up");

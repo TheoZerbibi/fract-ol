@@ -6,11 +6,20 @@
 /*   By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:05:36 by thzeribi          #+#    #+#             */
-/*   Updated: 2024/02/21 12:46:13 by thzeribi         ###   ########.fr       */
+/*   Updated: 2024/02/22 07:21:00 by thzeribi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
+
+void
+	change_color_shift(t_data *data)
+{
+	if (data->fractal.color_shift == 5)
+		data->fractal.color_shift = 1;
+	else
+		data->fractal.color_shift++;
+}
 
 static void
 	apply_shift(t_data *data)
@@ -26,9 +35,13 @@ static void
 		data->color.b += 70;
 	}
 	else if (data->fractal.color_shift == 3)
-		data->color.g += 75;
+		data->color.g += 50;
 	else if (data->fractal.color_shift == 4)
-		data->color.b += 140;
+	{
+		data->color.r += 64;
+		data->color.b += 64;
+		data->color.g += 64;
+	}
 	else
 	{
 		data->color.r += 105;
@@ -83,7 +96,7 @@ int	make_color(t_data *data)
 {
 	int	color_value;
 
-	color_value = data->fractal.math.count * 15;
+	color_value = data->math.count * 15;
 	data->color.r = get_red(color_value);
 	data->color.g = get_green(color_value);
 	data->color.b = get_blue(color_value);

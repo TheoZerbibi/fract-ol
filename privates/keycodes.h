@@ -6,7 +6,7 @@
 /*   By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 02:38:58 by thzeribi          #+#    #+#             */
-/*   Updated: 2023/02/26 02:35:59 by thzeribi         ###   ########.fr       */
+/*   Updated: 2024/02/22 06:14:46 by thzeribi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # define K_LEFT		65361
 # define K_RIGHT	65363
 # define K_SHIFT	65505
+# define K_SPACE	32
 # define K_CTRL		65507
 # define K_ESC		65307
 # define K_E		101

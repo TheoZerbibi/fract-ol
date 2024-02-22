@@ -6,7 +6,7 @@
 /*   By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 15:18:40 by mjacquet          #+#    #+#             */
-/*   Updated: 2024/02/21 12:50:00 by thzeribi         ###   ########.fr       */
+/*   Updated: 2024/02/22 07:21:43 by thzeribi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,6 @@ typedef struct s_img		t_img;
 typedef struct s_color		t_color;
 typedef struct s_fractal	t_fractal;
 typedef struct s_math		t_math;
-
-enum e_fractal_set
-{
-	MANDELBROT,
-	JULIA,
-	BUDDHABROT,
-	BURNING_SHIP
-};
 
 struct s_img
 {
@@ -75,17 +67,19 @@ struct s_fractal
 	int				resolution_shift;
 	double			julia_shiftx;
 	double			julia_shifty;
-	t_math			math;
 };
 
 struct s_data
 {
 	int					win_width;
 	int					win_height;
+	int					show_usage;
+	double				min_r;
 	enum e_fractal_set	set;
 	t_mlx				mlx;
 	t_img				image;
 	t_fractal			fractal;
+	t_math				math;
 	t_color				color;
 };
 

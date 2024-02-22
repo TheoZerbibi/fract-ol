@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   define.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjacquet <mjacquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 18:57:39 by mjacquet          #+#    #+#             */
-/*   Updated: 2023/02/28 04:17:50 by mjacquet         ###   ########.fr       */
+/*   Updated: 2024/02/22 07:55:08 by thzeribi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,23 @@
 
 # include <X11/keysym.h>
 
-enum e_error {
-	WALLS_ERROR,
-	INVALID_CHAR,
-	WRONG_NB_ARG,
-	FD_ERROR,
-	GNL_ERROR,
-	FAIL_MALLOC,
-	WRONG_EXT,
-	LACK_INFOS,
-	MLX_FAIL,
-	TEXTURE_ERROR,
+enum e_fractal_set
+{
+	MANDELBROT,
+	JULIA,
+	BUDDHABROT,
+	BURNING_SHIP
 };
+
+# ifndef BONUS
+#  define BONUS 0
+# endif
+
+# ifndef MAX_ITER
+#  define MAX_ITER 200
+# endif
+
+# define TITLE "Fractol"
 
 # define BLACK		"\e[30m"
 # define RED		"\e[31m"
@@ -41,17 +46,8 @@ enum e_error {
 # define TRUE 1
 # define FALSE 0
 
-# define MM_SIZE 5
-# define CUB_SIZE 32
-
-# define EXT "cub"
-
 # define PI 3.14159265358979323846264338327950288419716939937510582
-# define P2 1.57079632679
-# define P3 4.71238898038 
 # define DR 0.0174533
-
-# define PLAYER_SIZE 3
 
 # define RGB_LIGHT_GREY 0x00888888
 # define RGB_RED 0x00FF0000
