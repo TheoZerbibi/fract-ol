@@ -6,7 +6,7 @@
 /*   By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 22:41:11 by thzeribi          #+#    #+#             */
-/*   Updated: 2024/02/22 07:52:27 by thzeribi         ###   ########.fr       */
+/*   Updated: 2024/02/23 06:34:20 by thzeribi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,7 @@
 int
 	draw_fractol(t_data *data)
 {
-	if (data->set == MANDELBROT)
-		mandelbrot(data);
-	else if (data->set == JULIA)
-		printf("julia\n");//julia(data);
-	else if (data->set == BUDDHABROT)
-		printf("buddhabrot\n");//buddhabrot(data);
-	else if (data->set == BURNING_SHIP)
-		printf("burning_ship\n");//burning_ship(data);
-	else
-		exit_usage(data);
+	data->fractal.draw(data);
 	if (data->show_usage)
 		usage_background(data, 0x000222222);
 	mlx_put_image_to_window(data->mlx.mlx, \
@@ -54,20 +45,20 @@ int
 static int
 	init_fractol_set(char *set, t_data *data)
 {
-	if (ft_strcmp(set, "Mandelbrot") == 0
-		|| (ft_strlen(set) == 1 && set[0] == 'M'))
+	if (ft_strcmp(set, "mandelbrot") == 0
+		|| (ft_strlen(set) == 1 && set[0] == 'm'))
 	{
-		data->set = MANDELBROT;
+		data->fractal.draw = &mandelbrot;
 		init_mandelbrot(data);
 	}
-	else if (ft_strcmp(set, "Julia") == 0
-		|| (ft_strlen(set) == 1 && set[0] == 'J'))
+	else if (ft_strcmp(set, "julia") == 0
+		|| (ft_strlen(set) == 1 && set[0] == 'j'))
 		data->set = JULIA;
-	else if (ft_strcmp(set, "Buddhabrot") == 0
-		|| (ft_strlen(set) == 1 && set[0] == 'B'))
+	else if (ft_strcmp(set, "buddhabrot") == 0
+		|| (ft_strlen(set) == 1 && set[0] == 'b'))
 		data->set = BUDDHABROT;
-	else if (ft_strcmp(set, "Burning_ship") == 0
-		|| (ft_strlen(set) == 2 && set[0] == 'B' && set[1] == 'S'))
+	else if (ft_strcmp(set, "burning_ship") == 0
+		|| (ft_strlen(set) == 2 && set[0] == 'b' && set[1] == 's'))
 		data->set = BURNING_SHIP;
 	else
 		return (-1);

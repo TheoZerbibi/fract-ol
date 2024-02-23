@@ -6,7 +6,7 @@
 /*   By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 01:25:18 by thzeribi          #+#    #+#             */
-/*   Updated: 2023/01/10 00:24:32 by thzeribi         ###   ########.fr       */
+/*   Updated: 2024/02/23 10:11:03 by thzeribi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,10 +101,10 @@ int				init_tab(int *tab, int size);
 void			ft_display_file(int fd);
 const char		*ft_file_ext(const char *filename, const char ext);
 void			ft_memdel(void *ap);
-char			*get_next_line(int fd);
 void			ft_stack_trace(char *caller);
 int				ft_contain(char *src, char c);
 void			ft_swap(int *a, int *b);
+char			*get_next_line(int fd);
 
 /*
 ** -------------------------------------------------------------------

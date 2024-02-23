@@ -6,7 +6,7 @@
 /*   By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 15:18:40 by mjacquet          #+#    #+#             */
-/*   Updated: 2024/02/22 07:21:43 by thzeribi         ###   ########.fr       */
+/*   Updated: 2024/02/23 06:32:41 by thzeribi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ struct s_fractal
 	int				resolution_shift;
 	double			julia_shiftx;
 	double			julia_shifty;
+	int				(*draw)(t_data *data);
 };
 
 struct s_data

@@ -6,7 +6,7 @@
 #    By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/19 12:13:48 by thzeribi          #+#    #+#              #
-#    Updated: 2024/02/21 12:55:52 by thzeribi         ###   ########.fr        #
+#    Updated: 2024/02/23 10:13:22 by thzeribi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,7 +62,6 @@ OBJECTS		:=	$(SOURCES:.c=.o)
 OBJECTS		:=	$(addprefix $(OBJECTS_FOLDER),$(OBJECTS))
 SOURCES		:=	$(addprefix $(SOURCES_FOLDER),$(SOURCES))
 DEPS		:=	$(OBJECTS:.o=.d)
-
 
 ################################################################################
 #                                  FLAGS                                       #
