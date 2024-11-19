@@ -76,7 +76,7 @@ BNS				:=	0
 
 INCLUDES		:= -I$(INCLUDES_FOLDER) -I$(PATH_MLX)
 
-ifneq ($(LIBFT_FOLDER),)
+ifneq "$(wildcard $(LIBFT_FOLDER) )" ""
 	INCLUDES += -I$(LIBFT_FOLDER)includes
 	LDFLAGS  += -L $(LIBFT_FOLDER) -lft
 endif
@@ -152,12 +152,12 @@ $(PATH_MLX)/libmlx.a:
 	printf "\033[32;1m%s OK%40.40s\n\033[0m" $(PATH_MLX) ""
 
 makelib: $(PATH_MLX)/libmlx.a
-ifneq ($(LIBFT_FOLDER),)
+ifneq "$(wildcard $(LIBFT_FOLDER) )" ""
 	$(MAKE) -C $(LIBFT_FOLDER)
 endif
 
 config:
-ifneq ($(LIBFT_FOLDER),)
+ifneq "$(wildcard $(LIBFT_FOLDER) )" ""
 	$(MAKE) -C $(LIBFT_FOLDER) config
 	rm -rf $(OBJECTS_FOLDER)
 	rm -f $(NAME)
@@ -167,13 +167,17 @@ else
 endif
 
 clean: header
+ifneq "$(wildcard $(LIBFT_FOLDER) )" ""
 	$(MAKE) -C $(LIBFT_FOLDER) clean
+endif
 	rm -f $(OBJECTS)
 
 fclean: clean
+ifneq "$(wildcard $(LIBFT_FOLDER) )" ""
 	$(MAKE) -C $(LIBFT_FOLDER) fclean
-	$(MAKE) -C $(PATH_MLX) clean --quiet --jobs
 	printf "\t\t$(INFO_COLOR)LibFt $(NO_COLOR)Removed $(INFO_COLOR)Libft$(NO_COLOR).\n"
+endif
+	$(MAKE) -C $(PATH_MLX) clean --quiet --jobs
 	rm -f $(NAME)
 	rm -rf $(OBJECTS_FOLDER)
 	rm -f .DBG.* .BNS.*

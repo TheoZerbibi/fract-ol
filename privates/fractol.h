@@ -21,7 +21,11 @@
 
 # include "mlx.h"
 # include "struct.h"
-# include "libft.h"
+#ifdef __has_include
+# if __has_include("libft.h")
+#  include "libft.h"
+# endif
+#endif
 # include "keycodes.h"
 # include "define.h"
 
