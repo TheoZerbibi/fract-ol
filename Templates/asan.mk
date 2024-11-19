@@ -9,9 +9,8 @@
 #    Updated: 2024/02/22 07:59:06 by thzeribi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
-asan: header makelib
-	$(MAKE) $(NAME) DBG=1
+asan:
+	$(MAKE) DBG=1 header makelib $(NAME)
 
 .DBG.$(DEBUG): 
 	rm -f .DBG.*

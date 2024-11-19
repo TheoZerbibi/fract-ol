@@ -67,15 +67,19 @@ DEPS		:=	$(OBJECTS:.o=.d)
 #                                  FLAGS                                       #
 ################################################################################
 
-CFLAGS			:=	-Wall -Wextra -Werror -MMD -g
+CFLAGS			:=	-Wall -Wextra -Werror -MMD
 CC				:=	cc
-LDFLAGS			:=	-L $(LIBFT_FOLDER) -lft \
-					-L $(PATH_MLX) \
+LDFLAGS			:=	-L $(PATH_MLX) \
 					-lm -lmlx -lXext -lX11 -lpthread
 DBG				:=	0
 BNS				:=	0
 
-INCLUDES		:= -I$(INCLUDES_FOLDER) -I$(LIBFT_FOLDER)includes -I$(PATH_MLX)
+INCLUDES		:= -I$(INCLUDES_FOLDER) -I$(PATH_MLX)
+
+ifneq ($(LIBFT_FOLDER),)
+	INCLUDES += -I$(LIBFT_FOLDER)includes
+	LDFLAGS  += -L $(LIBFT_FOLDER) -lft
+endif
 
 ifneq (,$(wildcard ./.DBG.*))
 	ifeq ($(findstring $(MAKECMDGOALS), re),)
@@ -152,6 +156,16 @@ ifneq ($(LIBFT_FOLDER),)
 	$(MAKE) -C $(LIBFT_FOLDER)
 endif
 
+config:
+ifneq ($(LIBFT_FOLDER),)
+	$(MAKE) -C $(LIBFT_FOLDER) config
+	rm -rf $(OBJECTS_FOLDER)
+	rm -f $(NAME)
+	$(MAKE) all
+else
+	printf "\n$(INFO_COLOR)$(PROJECT_NAME) $(NO_COLOR)has no libft configured$(NO_COLOR).\n\n"
+endif
+
 clean: header
 	$(MAKE) -C $(LIBFT_FOLDER) clean
 	rm -f $(OBJECTS)
@@ -167,7 +181,7 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all re clean fclean makelib
+.PHONY: all re clean fclean makelib config
 
 -include ./Templates/header.mk ./Templates/asan.mk ./Templates/mallocator.mk \
 	./Templates/debug.mk ./Templates/bonus.mk

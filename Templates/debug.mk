@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-debug: header
-	$(MAKE) $(NAME) DBG=2
+debug:
+	$(MAKE) DBG=2 header makelib $(NAME)
 
 .PHONY: debug

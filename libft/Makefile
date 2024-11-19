@@ -225,4 +225,4 @@ norm:
 
 re: fclean all
 
-.PHONY: all re clean fclean norm config
+.PHONY: all re clean fclean norm config makelib
