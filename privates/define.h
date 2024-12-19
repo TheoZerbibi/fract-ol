@@ -23,10 +23,6 @@ enum e_fractal_set
 	BURNING_SHIP
 };
 
-# ifndef BONUS
-#  define BONUS 0
-# endif
-
 # ifndef MAX_ITER
 #  define MAX_ITER 200
 # endif

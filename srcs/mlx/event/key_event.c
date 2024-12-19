@@ -16,28 +16,30 @@ static void
 	move(t_data	*data, char direction)
 {
 	t_math *math = &data->math;
+	double width = data->math.max_r - data->math.min_r;
+	double height = data->math.max_i - data->math.min_i;
 
 	math->center_r = math->min_r - math->max_r;
 	math->center_i = math->min_i - math->max_i;
 	if (direction == 'U')
 	{
-		math->min_i -= math->center_i * 0.1;
-		math->max_i -= math->center_i * 0.1;
+		math->min_i += 0.1 * height;
+		math->max_i += 0.1 * height;
 	}
 	if (direction == 'D')
 	{
-		math->min_i += math->center_i * 0.1;
-		math->max_i += math->center_i * 0.1;
+		math->min_i -= 0.1 * height;
+		math->max_i -= 0.1 * height;
 	}
 	if (direction == 'R')
 	{
-		math->min_r -= math->center_r * 0.1;
-		math->max_r -= math->center_r * 0.1;
+		math->min_r += 0.1 * width;
+		math->max_r += 0.1 * width;
 	}
 	if (direction == 'L')
 	{
-		math->min_r += math->center_r * 0.1;
-		math->max_r += math->center_r * 0.1;
+		math->min_r -= 0.1 * width;
+		math->max_r -= 0.1 * width;
 	}
 	return ;
 }

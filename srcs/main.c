@@ -13,6 +13,25 @@
 #include "fractol.h"
 
 /**
+** @name lower_set_name(); [Static Function]
+** @brief Call by main function, this function lower the set name
+** to avoid case sensitive.
+**
+** @param char *set 
+**/
+static void lower_set_name(char *set)
+{
+	int i;
+
+	i = 0;
+	while (set[i])
+	{
+		set[i] = ft_tolower(set[i]);
+		i++;
+	}
+}
+
+/**
 ** @name draw_fractol();
 ** @brief Call by main function, this function call and draw the fractal set
 ** compared to fractol->set defined earlier.
@@ -42,9 +61,35 @@ int
 ** @return TRUE [1]
 ** @return FALSE [0]
 **/
+#ifdef BONUS
 static int
 	init_fractol_set(char *set, t_data *data)
 {
+	lower_set_name(set);
+	if (ft_strcmp(set, "mandelbrot") == 0
+		|| (ft_strlen(set) == 1 && set[0] == 'm'))
+	{
+		data->fractal.draw = &mandelbrot_bonus;
+		init_mandelbrot(data);
+	}
+	else if (ft_strcmp(set, "julia") == 0
+		|| (ft_strlen(set) == 1 && set[0] == 'j'))
+		data->set = JULIA;
+	else if (ft_strcmp(set, "buddhabrot") == 0
+		|| (ft_strlen(set) == 1 && set[0] == 'b'))
+		data->set = BUDDHABROT;
+	else if (ft_strcmp(set, "burning_ship") == 0
+		|| (ft_strlen(set) == 2 && set[0] == 'b' && set[1] == 's'))
+		data->set = BURNING_SHIP;
+	else
+		return (-1);
+	return (TRUE);
+}
+#else
+static int
+	init_fractol_set(char *set, t_data *data)
+{
+	lower_set_name(set);
 	if (ft_strcmp(set, "mandelbrot") == 0
 		|| (ft_strlen(set) == 1 && set[0] == 'm'))
 	{
@@ -64,6 +109,7 @@ static int
 		return (-1);
 	return (TRUE);
 }
+#endif
 
 /**
 ** @name main();
@@ -76,14 +122,15 @@ static int
 int	main(int argc, char *argv[])
 {
 	t_data	data;
-
+#ifdef BONUS
+	printf("BONUS ENABLED\n");
+#endif
 	data = (t_data){.show_usage = TRUE};
 	if (!_init_mlx(&data) || !_init_img(&data))
 		exit_init(&data);
 	if (argc != 2 || init_fractol_set(argv[1], &data) == -1)
 		exit_usage(&data);
-	if (!BONUS)
-		mlx_loop_hook(data.mlx.mlx, &draw_fractol, &data);
+	mlx_loop_hook(data.mlx.mlx, &draw_fractol, &data);
 	mlx_loop(data.mlx.mlx);
 	_end_mlx(&data, 0);
 	return (0);

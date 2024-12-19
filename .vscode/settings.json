@@ -1,5 +1,8 @@
 {
     "files.associations": {
-        "__config": "cpp"
+        "__config": "cpp",
+        "bitset": "c",
+        "format": "c",
+        "pthread.h": "c"
     }
 }

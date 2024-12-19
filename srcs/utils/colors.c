@@ -21,38 +21,8 @@ void
 		data->fractal.color_shift++;
 }
 
-static void
-	apply_shift(t_data *data)
-{
-	if (data->fractal.color_shift == 1)
-	{
-		data->color.r += 150;
-		data->color.b += 10;
-	}
-	else if (data->fractal.color_shift == 2)
-	{
-		data->color.r += 70;
-		data->color.b += 70;
-	}
-	else if (data->fractal.color_shift == 3)
-		data->color.g += 50;
-	else if (data->fractal.color_shift == 4)
-	{
-		data->color.r += 64;
-		data->color.b += 64;
-		data->color.g += 64;
-	}
-	else
-	{
-		data->color.r += 105;
-		data->color.g += 77;
-		data->color.b += 247;
-	}
-	return ;
-}
-
-static
-	int	get_red(int color_value)
+static int
+	get_red(int color_value)
 {
 	if (color_value >= 0 && color_value <= 255)
 		return (255);
@@ -66,8 +36,8 @@ static
 		return (255);
 }
 
-static
-	int	get_green(int color_value)
+static int
+	get_green(int color_value)
 {
 	if (color_value >= 0 && color_value <= 255)
 		return (color_value);
@@ -92,15 +62,68 @@ static int
 		return (255);
 }
 
-int	make_color(t_data *data)
+static void
+	get_shift_offsets(t_data *data, int *r_off, int *g_off, int *b_off)
 {
-	int	color_value;
+	*r_off = 0;
+	*g_off = 0;
+	*b_off = 0;
 
-	color_value = data->math.count * 15;
-	data->color.r = get_red(color_value);
-	data->color.g = get_green(color_value);
-	data->color.b = get_blue(color_value);
-	apply_shift(data);
-	return (create_trgb(0, data->color.r, data->color.g, \
-			data->color.b));
+	if (data->fractal.color_shift == 1)
+	{
+		*r_off += 150;
+		*b_off += 10;
+	}
+	else if (data->fractal.color_shift == 2)
+	{
+		*r_off += 70;
+		*b_off += 70;
+	}
+	else if (data->fractal.color_shift == 3)
+	{
+		*g_off += 50;
+	}
+	else if (data->fractal.color_shift == 4)
+	{
+		*r_off += 64;
+		*g_off += 64;
+		*b_off += 64;
+	}
+	else
+	{
+		*r_off += 105;
+		*g_off += 77;
+		*b_off += 247;
+	}
+}
+
+static int
+	clamp_color(int c)
+{
+	if (c < 0)
+		c = 0;
+	else if (c > 255)
+		c = 255;
+	return (c);
+}
+
+int
+	make_color(t_data *data, int iteration)
+{
+	int color_value;
+	int r, g, b;
+	int r_off, g_off, b_off;
+
+	color_value = iteration * 15;
+	r = get_red(color_value);
+	g = get_green(color_value);
+	b = get_blue(color_value);
+
+	get_shift_offsets(data, &r_off, &g_off, &b_off);
+
+	r = clamp_color(r + r_off);
+	g = clamp_color(g + g_off);
+	b = clamp_color(b + b_off);
+
+	return create_trgb(0, r, g, b);
 }

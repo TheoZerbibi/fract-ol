@@ -12,28 +12,32 @@
 
 #include "fractol.h"
 
-
-static void
-	_zoom(t_math *math, double zoom)
-{
-	math->center_r = math->min_r - math->max_r;
-	math->center_i = math->max_i - math->min_i;
-	math->max_r = math->max_r + (math->center_r - zoom * math->center_r) / 2;
-	math->min_r = math->max_r + zoom * math->center_r;
-	math->min_i = math->min_i + (math->center_i - zoom * math->center_i) / 2;
-	math->max_i = math->min_i + zoom * math->center_i;
-	return ;
-}
-
 int
 	mouse(int keycode, int x, int y, t_data *data)
 {
-	(void)x;
-	(void)y;
-	if (keycode == 4) {
-		_zoom(&data->math, 0.9);
+    double cx;
+    double cy;
+    double width;
+    double height;
+    double zoom_factor;
+
+	cx = data->math.min_r + (double)x * (data->math.max_r - data->math.min_r) / data->win_width;
+	cy = data->math.max_i + (double)y * (data->math.min_i - data->math.max_i) / data->win_height;
+    width = data->math.max_r - data->math.min_r;
+    height = data->math.max_i - data->math.min_i;
+    if (keycode == 4)  // Zoom avant
+        zoom_factor = 0.9;
+    else if (keycode == 5) // Zoom arrière
+        zoom_factor = 1.1;
+    else {
+        return (1);
 	}
-	else if (keycode == 5)
-		_zoom(&data->math, 1.1);
-	return (1);
+	width *= zoom_factor;
+	height *= zoom_factor;
+	data->math.min_r = cx - width / 2.0;
+	data->math.max_r = cx + width / 2.0;
+	data->math.min_i = cy - height / 2.0;
+	data->math.max_i = cy + height / 2.0;
+    return (1);
 }
+

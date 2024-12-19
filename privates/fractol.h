@@ -18,6 +18,7 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# include <unistd.h>
 
 # include "mlx.h"
 # include "struct.h"
@@ -25,6 +26,9 @@
 # if __has_include("libft.h")
 #  include "libft.h"
 # endif
+#endif
+#ifdef BONUS
+# include <pthread.h>
 #endif
 # include "keycodes.h"
 # include "define.h"
@@ -39,7 +43,7 @@ int		mouse(int keycode, int x, int y, t_data *data);
 void	reset_img(t_data *data);
 void	my_mlx_pixel_put(t_img *data, int x, int y, int color);
 int		create_trgb(int t, int r, int g, int b);
-int		make_color(t_data *data);
+int		make_color(t_data *data, int iteration);
 void	change_color_shift(t_data *data);
 
 int		draw_usage(t_data *data, int col);
@@ -49,6 +53,12 @@ void	exit_init(t_data *data);
 void	exit_usage(t_data *data);
 
 void	init_mandelbrot(t_data *data);
+int     is_mandelbrot(t_data *data, double cr, double ci);
 int		mandelbrot(t_data *data);
+
+#ifdef BONUS
+int     mandelbrot_bonus(t_data *data);
+#endif
+
 
 #endif

@@ -18,12 +18,15 @@
 # include <sys/wait.h>
 # include "define.h"
 
-typedef struct s_mlx		t_mlx;
-typedef struct s_data		t_data;
-typedef struct s_img		t_img;
-typedef struct s_color		t_color;
-typedef struct s_fractal	t_fractal;
-typedef struct s_math		t_math;
+typedef struct s_mlx			t_mlx;
+typedef struct s_data			t_data;
+typedef struct s_img			t_img;
+typedef struct s_color			t_color;
+typedef struct s_fractal		t_fractal;
+typedef struct s_math			t_math;
+#ifdef BONUS
+	typedef struct s_thread_data	t_thread_data;
+#endif
 
 struct s_img
 {
@@ -83,5 +86,17 @@ struct s_data
 	t_math				math;
 	t_color				color;
 };
+
+#ifdef BONUS
+	struct s_thread_data
+	{
+		t_data  *data;
+		int     start_line;
+		int     end_line;
+		double  step_r;
+		double  step_i;
+		int     thread_id;
+	};
+#endif
 
 #endif

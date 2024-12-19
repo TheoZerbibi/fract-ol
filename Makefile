@@ -46,22 +46,13 @@ SOURCES := \
 		utils/exit_case.c \
 
 BONUS_SOURCES := \
-		\
+		sets/mandelbrot_bonus.c \
 
 ################################################################################
 #                                   MLX                                        #
 ################################################################################
 
 PATH_MLX	:= minilibx-linux
-
-################################################################################
-#                                  OBJETS                                      #
-################################################################################
-
-OBJECTS		:=	$(SOURCES:.c=.o)
-OBJECTS		:=	$(addprefix $(OBJECTS_FOLDER),$(OBJECTS))
-SOURCES		:=	$(addprefix $(SOURCES_FOLDER),$(SOURCES))
-DEPS		:=	$(OBJECTS:.o=.d)
 
 ################################################################################
 #                                  FLAGS                                       #
@@ -107,11 +98,21 @@ endif
 
 ifeq ($(BNS), 1)
 	SOURCES += $(BONUS_SOURCES)
-	CFLAGS += -pthread -D BONUS=1
+	CFLAGS += -pthread -DBONUS -O0
 	BONUS := $(BNS)
 else
 	BONUS := 0
 endif
+
+################################################################################
+#                                  OBJETS                                      #
+################################################################################
+
+OBJECTS		:=	$(SOURCES:.c=.o)
+OBJECTS		:=	$(addprefix $(OBJECTS_FOLDER),$(OBJECTS))
+SOURCES		:=	$(addprefix $(SOURCES_FOLDER),$(SOURCES))
+DEPS		:=	$(OBJECTS:.o=.d)
+
 
 ################################################################################
 #                                 COLORS                                       #
