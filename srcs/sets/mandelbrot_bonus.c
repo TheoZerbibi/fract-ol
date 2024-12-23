@@ -30,7 +30,6 @@ inside_main_cardioid(double cr, double ci)
 static inline int
 inside_period2_bulb(double cr, double ci)
 {
-    // Test du bulbe de période-2
     double tmp = (cr + 1.0);
     return ((tmp * tmp + ci * ci) <= 1.0 / 16.0);
 }

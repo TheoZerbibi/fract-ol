@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "fractol.h"
+#include <stdio.h>
 
 int
 	mouse(int keycode, int x, int y, t_data *data)
@@ -21,13 +22,13 @@ int
     double height;
     double zoom_factor;
 
-	cx = data->math.min_r + (double)x * (data->math.max_r - data->math.min_r) / data->win_width;
-	cy = data->math.max_i + (double)y * (data->math.min_i - data->math.max_i) / data->win_height;
+	cx = data->math.min_r + ((double)x * (data->math.max_r - data->math.min_r)) / data->win_width;
+	cy = data->math.max_i + ((double)y * (data->math.min_i - data->math.max_i)) / data->win_height;
     width = data->math.max_r - data->math.min_r;
     height = data->math.max_i - data->math.min_i;
-    if (keycode == 4)  // Zoom avant
+    if (keycode == 4)
         zoom_factor = 0.9;
-    else if (keycode == 5) // Zoom arrière
+    else if (keycode == 5)
         zoom_factor = 1.1;
     else {
         return (1);
@@ -40,4 +41,3 @@ int
 	data->math.max_i = cy + height / 2.0;
     return (1);
 }
-

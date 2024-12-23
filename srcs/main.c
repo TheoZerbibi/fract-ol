@@ -71,6 +71,7 @@ static int
 	{
 		data->fractal.draw = &mandelbrot_bonus;
 		init_mandelbrot(data);
+		data->set = MANDELBROT;
 	}
 	else if (ft_strcmp(set, "julia") == 0
 		|| (ft_strlen(set) == 1 && set[0] == 'j'))
@@ -80,8 +81,11 @@ static int
 		data->set = BUDDHABROT;
 	else if (ft_strcmp(set, "burning_ship") == 0
 		|| (ft_strlen(set) == 2 && set[0] == 'b' && set[1] == 's'))
+	{
+		data->fractal.draw = &burningship_bonus;
+		init_burning_ship(data);
 		data->set = BURNING_SHIP;
-	else
+	} else
 		return (-1);
 	return (TRUE);
 }
@@ -95,6 +99,7 @@ static int
 	{
 		data->fractal.draw = &mandelbrot;
 		init_mandelbrot(data);
+		data->set = MANDELBROT;
 	}
 	else if (ft_strcmp(set, "julia") == 0
 		|| (ft_strlen(set) == 1 && set[0] == 'j'))
@@ -104,8 +109,11 @@ static int
 		data->set = BUDDHABROT;
 	else if (ft_strcmp(set, "burning_ship") == 0
 		|| (ft_strlen(set) == 2 && set[0] == 'b' && set[1] == 's'))
+	{
+		data->fractal.draw = &burning_ship;
+		init_burning_ship(data);
 		data->set = BURNING_SHIP;
-	else
+	} else
 		return (-1);
 	return (TRUE);
 }

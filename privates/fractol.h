@@ -56,8 +56,13 @@ void	init_mandelbrot(t_data *data);
 int     is_mandelbrot(t_data *data, double cr, double ci);
 int		mandelbrot(t_data *data);
 
+void	init_burning_ship(t_data *data);
+int     is_burningship(t_data *data, double cr, double ci);
+int	    burning_ship(t_data *data);
+
 #ifdef BONUS
 int     mandelbrot_bonus(t_data *data);
+int     burningship_bonus(t_data *data);
 #endif
 
 

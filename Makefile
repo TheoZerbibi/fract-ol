@@ -40,6 +40,7 @@ SOURCES := \
 		mlx/event/mouse_event.c \
 		\
 		sets/mandelbrot.c \
+		sets/burning_ship.c \
 		\
 		utils/usage.c \
 		utils/colors.c \
@@ -47,6 +48,7 @@ SOURCES := \
 
 BONUS_SOURCES := \
 		sets/mandelbrot_bonus.c \
+		sets/burning_ship_bonus.c \
 
 ################################################################################
 #                                   MLX                                        #
