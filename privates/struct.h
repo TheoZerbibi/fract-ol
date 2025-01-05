@@ -6,7 +6,7 @@
 /*   By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 15:18:40 by thzeribi          #+#    #+#             */
-/*   Updated: 2025/01/05 04:34:50 by thzeribi         ###   ########.fr       */
+/*   Updated: 2025/01/05 15:53:16 by thzeribi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,6 @@ typedef struct s_img			t_img;
 typedef struct s_color			t_color;
 typedef struct s_fractal		t_fractal;
 typedef struct s_math			t_math;
-#ifdef BONUS
-	typedef struct s_thread_data	t_thread_data;
-#endif
 
 typedef struct s_img
 {
@@ -79,17 +76,5 @@ typedef struct s_data
     t_math      math;
     t_color     color;
 }   t_data;
-
-#ifdef BONUS
-	struct s_thread_data
-	{
-		t_data  *data;
-		int     start_line;
-		int     end_line;
-		double  step_r;
-		double  step_i;
-		int     thread_id;
-	};
-#endif
 
 #endif

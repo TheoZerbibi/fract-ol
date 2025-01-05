@@ -6,7 +6,7 @@
 #    By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/19 12:13:48 by thzeribi          #+#    #+#              #
-#    Updated: 2025/01/04 19:26:22 by thzeribi         ###   ########.fr        #
+#    Updated: 2025/01/05 16:12:01 by thzeribi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,16 +40,17 @@ SOURCES := \
 		mlx/event/key_event.c \
 		mlx/event/mouse_event.c \
 		\
-		sets/mandelbrot.c \
-		sets/burning_ship.c \
+		sets/mandelbrot/mandelbrot.c \
+		sets/burning_ship/burning_ship.c \
 		\
 		utils/usage.c \
 		utils/colors.c \
 		utils/exit_case.c \
 
 BONUS_SOURCES := \
-		sets/mandelbrot_bonus.c \
-		sets/burning_ship_bonus.c \
+		bonus/threads.c \
+		sets/mandelbrot/mandelbrot_bonus.c \
+		sets/burning_ship/burning_ship_bonus.c \
 
 ################################################################################
 #                                  FLAGS                                       #

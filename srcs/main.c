@@ -6,11 +6,14 @@
 /*   By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 22:41:11 by thzeribi          #+#    #+#             */
-/*   Updated: 2024/02/23 06:34:20 by thzeribi         ###   ########.fr       */
+/*   Updated: 2025/01/05 16:15:20 by thzeribi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
+#ifdef BONUS
+# include "bonus.h"
+#endif
 
 /**
 ** @name lower_set_name(); [Static Function]

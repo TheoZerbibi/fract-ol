@@ -3,6 +3,7 @@
         "__config": "cpp",
         "bitset": "c",
         "format": "c",
-        "pthread.h": "c"
+        "pthread.h": "c",
+        "bonus.h": "c"
     }
 }
