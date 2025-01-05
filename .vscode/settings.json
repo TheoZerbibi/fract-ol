@@ -4,6 +4,7 @@
         "bitset": "c",
         "format": "c",
         "pthread.h": "c",
-        "bonus.h": "c"
+        "bonus.h": "c",
+        "sched.h": "c"
     }
 }

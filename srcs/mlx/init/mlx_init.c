@@ -6,7 +6,7 @@
 /*   By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 05:33:14 by thzeribi          #+#    #+#             */
-/*   Updated: 2024/02/22 07:50:22 by thzeribi         ###   ########.fr       */
+/*   Updated: 2025/01/05 19:32:37 by thzeribi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,25 @@
 int
 	_init_img(t_data *data)
 {
-	data->image.image = mlx_new_image(data->mlx.mlx, data->win_width,
-			data->win_height);
+	data->image.image = mlx_new_image(data->mlx.mlx, data->win_width, data->win_height);
 	if (!data->image.image)
 		return (FALSE);
-	data->image.addr = mlx_get_data_addr(data->image.image, &data->image.bpp,
-			&data->image.size_line, &data->image.endian);
+	data->image.addr = mlx_get_data_addr(data->image.image, &data->image.bpp, &data->image.size_line, &data->image.endian);
 	if (!data->image.addr)
 		return (FALSE);
 	data->image.width = data->win_width;
 	data->image.height = data->win_height;
+	data->image.buffer = malloc(data->win_width * data->win_height * sizeof(unsigned int));
+	if (!data->image.buffer)
+	{
+		perror("malloc image.buffer");
+		return (FALSE);
+	}
+	memset(data->image.buffer, 0, data->win_width * data->win_height * sizeof(unsigned int));
 	return (TRUE);
 }
+
+
 
 /**
 ** @name _init_mlx()

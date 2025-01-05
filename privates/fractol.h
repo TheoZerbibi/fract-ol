@@ -6,7 +6,7 @@
 /*   By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 15:01:30 by thzeribi          #+#    #+#             */
-/*   Updated: 2025/01/05 16:14:44 by thzeribi         ###   ########.fr       */
+/*   Updated: 2025/01/05 19:39:06 by thzeribi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,14 @@ int		mouse(int keycode, int x, int y, t_data *data);
 void	reset_img(t_data *data);
 void	my_mlx_pixel_put(t_img *data, int x, int y, int color);
 
+void    adjust_max_iterations(t_data *data);
+double  calculate_scale_ratio(t_data *data);
+void    initialize_math(t_data *data);
+int     redraw_fractal(t_data *data);
 
 int		draw_usage(t_data *data, int col);
 void	usage_background(t_data *data, int color);
+const char  *get_fractal_name(enum e_fractal_set set);
 
 void	exit_init(t_data *data);
 void	exit_usage(t_data *data);
@@ -57,11 +62,6 @@ int		mandelbrot(t_data *data);
 void	init_burning_ship(t_data *data);
 double  is_burningship_smooth(t_data *data, double cr, double ci);
 int	    burning_ship(t_data *data);
-
-#ifdef BONUS
-int     mandelbrot_bonus(t_data *data);
-int     burningship_bonus(t_data *data);
-#endif
 
 
 #endif

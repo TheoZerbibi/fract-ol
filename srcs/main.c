@@ -6,7 +6,7 @@
 /*   By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 22:41:11 by thzeribi          #+#    #+#             */
-/*   Updated: 2025/01/05 16:15:20 by thzeribi         ###   ########.fr       */
+/*   Updated: 2025/01/05 20:18:02 by thzeribi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,14 @@ static void lower_set_name(char *set)
 **
 ** @param t_fractol *fractol
 **/
-int
-	draw_fractol(t_data *data)
+int draw_fractol(t_data *data)
 {
-	data->fractal.draw(data);
-	if (data->show_usage)
-		usage_background(data, 0x000222222);
-	mlx_put_image_to_window(data->mlx.mlx, \
-		data->mlx.win, data->image.image, 0, 0);
-	if (data->show_usage)
-		draw_usage(data, 0xEEEEEE);
-	return (0);
+    if (data->show_usage)
+        usage_background(data, 0x000222222);
+    mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->image.image, 0, 0);
+    if (data->show_usage)
+        draw_usage(data, 0xEEEEEE);
+    return (0);
 }
 
 /**
@@ -73,22 +70,35 @@ static int
 		|| (ft_strlen(set) == 1 && set[0] == 'm'))
 	{
 		data->fractal.draw = &mandelbrot_bonus;
+		data->fractal.iterate = &is_mandelbrot_smooth;
 		init_mandelbrot(data);
 		data->set = MANDELBROT;
 	}
 	else if (ft_strcmp(set, "julia") == 0
 		|| (ft_strlen(set) == 1 && set[0] == 'j'))
+	{
+		// data->fractal.iterate = &is_julia_esmooth;
+		// data->fractal.draw = &julia_bonus;
+		// init_julia(data);
 		data->set = JULIA;
+	}
 	else if (ft_strcmp(set, "buddhabrot") == 0
 		|| (ft_strlen(set) == 1 && set[0] == 'b'))
+	{
+		// data->fractal.iterate = &is_buddhabrot_smooth;
+		// data->fractal.draw = &buddhabrot_bonus;
+		// init_buddhabrot(data);
 		data->set = BUDDHABROT;
+	}
 	else if (ft_strcmp(set, "burning_ship") == 0
 		|| (ft_strlen(set) == 2 && set[0] == 'b' && set[1] == 's'))
 	{
 		data->fractal.draw = &burningship_bonus;
+		data->fractal.iterate = &is_burningship_smooth;
 		init_burning_ship(data);
 		data->set = BURNING_SHIP;
-	} else
+	}
+	else
 		return (-1);
 	return (TRUE);
 }
@@ -101,22 +111,35 @@ static int
 		|| (ft_strlen(set) == 1 && set[0] == 'm'))
 	{
 		data->fractal.draw = &mandelbrot;
+		data->fractal.iterate = &is_mandelbrot_smooth;
 		init_mandelbrot(data);
 		data->set = MANDELBROT;
 	}
 	else if (ft_strcmp(set, "julia") == 0
 		|| (ft_strlen(set) == 1 && set[0] == 'j'))
+	{
+		data->fractal.iterate = &is_julia_smooth;
+		data->fractal.draw = &julia;
+		init_julia(data);
 		data->set = JULIA;
+	}
 	else if (ft_strcmp(set, "buddhabrot") == 0
 		|| (ft_strlen(set) == 1 && set[0] == 'b'))
+	{
+		data->fractal.iterate = &is_buddhabrot_smooth;
+		data->fractal.draw = &buddhabrot;
+		init_buddhabrot(data);
 		data->set = BUDDHABROT;
+	}
 	else if (ft_strcmp(set, "burning_ship") == 0
 		|| (ft_strlen(set) == 2 && set[0] == 'b' && set[1] == 's'))
 	{
 		data->fractal.draw = &burning_ship;
+		data->fractal.iterate = &is_burningship_smooth;
 		init_burning_ship(data);
 		data->set = BURNING_SHIP;
-	} else
+	}
+	else
 		return (-1);
 	return (TRUE);
 }
@@ -130,9 +153,10 @@ static int
 ** @param char *argv[]
 **/
 
-int	main(int argc, char *argv[])
+int
+	main(int argc, char *argv[])
 {
-	t_data	data;
+	t_data  data;
 #ifdef BONUS
 	printf("BONUS ENABLED\n");
 #endif

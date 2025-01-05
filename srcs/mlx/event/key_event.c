@@ -6,7 +6,7 @@
 /*   By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 05:37:57 by thzeribi          #+#    #+#             */
-/*   Updated: 2025/01/05 05:56:37 by thzeribi         ###   ########.fr       */
+/*   Updated: 2025/01/05 19:38:47 by thzeribi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,6 @@ int
 		move(data, 'L');
 	if (keycode == K_D || keycode == K_RIGHT)
 		move(data, 'R');
+	redraw_fractal(data);
 	return (keycode);
 }

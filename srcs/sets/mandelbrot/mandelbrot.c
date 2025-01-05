@@ -6,7 +6,7 @@
 /*   By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 10:44:50 by thzeribi          #+#    #+#             */
-/*   Updated: 2025/01/05 07:08:19 by thzeribi         ###   ########.fr       */
+/*   Updated: 2025/01/05 17:38:34 by thzeribi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,29 +19,33 @@
 ** @param double cr
 ** @param double ci
 **/
-double
+double inline
 	is_mandelbrot_smooth(t_data *data, double cr, double ci) {
-	double	zr;
-	double	zi;
-	double	tmp;
-	int		i;
-	int		max_iter;
+	int i = 0;
+	double zr = 0.0;
+	double zi = 0.0;
+	double zr_sq = 0.0;
+	double zi_sq = 0.0;
 
-	zr = 0;
-	zi = 0;
-	i = 0;
-	max_iter = data->fractal.max_iterations + data->fractal.resolution_shift;
-	while (i <= max_iter)
+	while (zr_sq + zi_sq <= 4.0 && i < data->fractal.max_iterations)
 	{
-		if ((zr * zr) + (zi * zi) > 4.0)
-			return (smooth_iteration(i, zr, zi));
-		tmp = 2 * zr * zi + ci;
-		zr = (zr * zr) - (zi * zi) + cr;
-		zi = tmp;
+		// Calcul correct de zr et zi
+		double temp_zr = zr_sq - zi_sq + cr;
+		double temp_zi = 2.0 * zr * zi + ci;
+		zr = temp_zr;
+		zi = temp_zi;
+		zr_sq = zr * zr;
+		zi_sq = zi * zi;
 		i++;
 	}
-	return ((double)data->fractal.max_iterations);
+
+	if (i == data->fractal.max_iterations)
+		return (i);
+	else
+		// Lissage pour des couleurs plus douces
+		return (i + 1 - log(log(sqrt(zr_sq + zi_sq))) / log(2.0));
 }
+
 
 /**
 ** @name init_mandelbrot();
@@ -71,23 +75,23 @@ void
 int
 	mandelbrot(t_data *data)
 {
-	int		x;
-	int		y;
-	double	step_r;
-	double	step_i;
-	double	it;
+	int     x;
+	int     y;
+	double  step_r;
+	double  step_i;
+	double  it;
 
 	step_r = (data->math.max_r - data->math.min_r) / (double)data->win_width;
-	step_i = (data->math.min_i - data->math.max_i) / (double)data->win_height;
+	step_i = (data->math.max_i - data->math.min_i) / (double)data->win_height;
 	y = -1;
 	while (++y < data->win_height)
 	{
+		double pi = data->math.min_i + y * step_i;
 		x = -1;
 		while (++x < data->win_width)
 		{
-			it = is_mandelbrot_smooth(data,
-					data->math.min_r + x * step_r,
-					data->math.max_i + y * step_i);
+			double pr = data->math.min_r + x * step_r;
+			it = is_mandelbrot_smooth(data, pr, pi);
 			if (it >= data->fractal.max_iterations)
 				my_mlx_pixel_put(&data->image, x, y, create_trgb(0, 0, 0, 0));
 			else

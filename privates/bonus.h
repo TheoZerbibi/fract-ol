@@ -6,7 +6,7 @@
 /*   By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 16:14:16 by thzeribi          #+#    #+#             */
-/*   Updated: 2025/01/05 16:16:27 by thzeribi         ###   ########.fr       */
+/*   Updated: 2025/01/05 19:37:24 by thzeribi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 # define BONUS_H
 
 # include "fractol.h"
-# include <pthread.h>
 # include <sched.h>
 # include <math.h>
 
@@ -25,18 +24,15 @@ typedef double	(*t_iterate_func)(t_data *, double, double);
 
 struct s_thread_data
 {
-	t_data	*data;
-	int		start_line;
-	int		end_line;
-	double	step_r;
-	double	step_i;
-	int		thread_id;
+    t_data          *data;
+    int             thread_id;
 };
 
-void	set_thread_affinity(int thread_id);
+
+void set_thread_affinity(int thread_id, int num_cores);
 void	*thread_render_generic(void *arg);
-void	set_thread_affinity(int thread_id);
 void	*thread_render_generic(void *arg);
+void initialize_thread_pool(t_data *data, int total_lines);
 
 int		mandelbrot_bonus(t_data *data);
 int		burningship_bonus(t_data *data);

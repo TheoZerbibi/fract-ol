@@ -6,7 +6,7 @@
 #    By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/19 12:13:48 by thzeribi          #+#    #+#              #
-#    Updated: 2025/01/05 16:12:01 by thzeribi         ###   ########.fr        #
+#    Updated: 2025/01/05 18:57:54 by thzeribi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ SOURCES := \
 		sets/mandelbrot/mandelbrot.c \
 		sets/burning_ship/burning_ship.c \
 		\
+		utils/math.c \
 		utils/usage.c \
 		utils/colors.c \
 		utils/exit_case.c \
@@ -100,7 +101,7 @@ endif
 
 ifeq ($(BNS), 1)
 	SOURCES += $(BONUS_SOURCES)
-	CFLAGS += -pthread -DBONUS -O0
+	CFLAGS += -pthread -DBONUS -O3
 	LDFLAGS += -pthread
 	BONUS := $(BNS)
 else

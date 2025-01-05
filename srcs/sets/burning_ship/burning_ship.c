@@ -6,7 +6,7 @@
 /*   By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 10:44:50 by thzeribi          #+#    #+#             */
-/*   Updated: 2025/01/05 06:58:25 by thzeribi         ###   ########.fr       */
+/*   Updated: 2025/01/05 16:23:24 by thzeribi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@
  ** @param double ci Imaginary part of the complex number
  ** @return Number of iterations or -1 if the point is in the set
  **/
-double is_burningship_smooth(t_data *data, double cr, double ci)
+double inline
+    is_burningship_smooth(t_data *data, double cr, double ci)
 {
 	double zr = 0.0;
 	double zi = 0.0;

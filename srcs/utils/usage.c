@@ -6,7 +6,7 @@
 /*   By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:36:07 by thzeribi          #+#    #+#             */
-/*   Updated: 2024/02/22 06:19:18 by thzeribi         ###   ########.fr       */
+/*   Updated: 2025/01/05 17:33:16 by thzeribi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,22 @@ int
 	// mlx_string_put(mlx, win, x, y + 155, col, "Scale down      page down");
 	// mlx_string_put(mlx, win, x, y + 180, col, "Angle           q e");
 	return (0);
+}
+
+const char
+	*get_fractal_name(enum e_fractal_set set)
+{
+	switch(set)
+	{
+		case MANDELBROT:
+			return "mandelbrot";
+		case JULIA:
+			return "julia";
+		case BUDDHABROT:
+			return "buddhabrot";
+		case BURNING_SHIP:
+			return "burning_ship";
+		default:
+			return "unknown";
+	}
 }
