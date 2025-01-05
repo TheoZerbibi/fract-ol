@@ -6,30 +6,43 @@
 /*   By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 05:37:57 by thzeribi          #+#    #+#             */
-/*   Updated: 2024/02/22 07:54:01 by thzeribi         ###   ########.fr       */
+/*   Updated: 2025/01/05 05:56:37 by thzeribi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-static void
-	move(t_data	*data, char direction)
+static void move(t_data *data, char direction)
 {
 	t_math *math = &data->math;
-	double width = data->math.max_r - data->math.min_r;
-	double height = data->math.max_i - data->math.min_i;
+	double width = math->max_r - math->min_r;
+	double height = math->max_i - math->min_i;
 
-	math->center_r = math->min_r - math->max_r;
-	math->center_i = math->min_i - math->max_i;
-	if (direction == 'U')
+	if (data->set == BURNING_SHIP)
 	{
-		math->min_i += 0.1 * height;
-		math->max_i += 0.1 * height;
+		if (direction == 'U')
+		{
+			math->min_i -= 0.1 * height;
+			math->max_i -= 0.1 * height;
+		}
+		if (direction == 'D')
+		{
+			math->min_i += 0.1 * height;
+			math->max_i += 0.1 * height;
+		}
 	}
-	if (direction == 'D')
+	else
 	{
-		math->min_i -= 0.1 * height;
-		math->max_i -= 0.1 * height;
+		if (direction == 'U')
+		{
+			math->min_i += 0.1 * height;
+			math->max_i += 0.1 * height;
+		}
+		if (direction == 'D')
+		{
+			math->min_i -= 0.1 * height;
+			math->max_i -= 0.1 * height;
+		}
 	}
 	if (direction == 'R')
 	{

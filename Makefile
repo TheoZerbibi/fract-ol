@@ -6,7 +6,7 @@
 #    By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/19 12:13:48 by thzeribi          #+#    #+#              #
-#    Updated: 2024/02/23 10:13:22 by thzeribi         ###   ########.fr        #
+#    Updated: 2025/01/04 19:26:22 by thzeribi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SOURCES_FOLDER		:=	./srcs/
 INCLUDES_FOLDER		:=	./privates/
 OBJECTS_FOLDER		:=	./objs/
 LIBFT_FOLDER		:=	./libft/
+MLX_FOLDER			:= minilibx-linux
 
 SOURCES := \
 		main.c \
@@ -51,23 +52,21 @@ BONUS_SOURCES := \
 		sets/burning_ship_bonus.c \
 
 ################################################################################
-#                                   MLX                                        #
-################################################################################
-
-PATH_MLX	:= minilibx-linux
-
-################################################################################
 #                                  FLAGS                                       #
 ################################################################################
 
 CFLAGS			:=	-Wall -Wextra -Werror -MMD
 CC				:=	cc
-LDFLAGS			:=	-L $(PATH_MLX) \
-					-lm -lmlx -lXext -lX11 -lpthread
+LDFLAGS			:=	-lpthread -L $(MLX_FOLDER) \
+				-lm -lmlx -lXext -lX11
 DBG				:=	0
 BNS				:=	0
 
-INCLUDES		:= -I$(INCLUDES_FOLDER) -I$(PATH_MLX)
+INCLUDES		:= -I$(INCLUDES_FOLDER) -I$(MLX_FOLDER)
+
+################################################################################
+#                                  LOGICS                                      #
+################################################################################
 
 ifneq "$(wildcard $(LIBFT_FOLDER) )" ""
 	INCLUDES += -I$(LIBFT_FOLDER)includes
@@ -101,6 +100,7 @@ endif
 ifeq ($(BNS), 1)
 	SOURCES += $(BONUS_SOURCES)
 	CFLAGS += -pthread -DBONUS -O0
+	LDFLAGS += -pthread
 	BONUS := $(BNS)
 else
 	BONUS := 0
@@ -114,7 +114,6 @@ OBJECTS		:=	$(SOURCES:.c=.o)
 OBJECTS		:=	$(addprefix $(OBJECTS_FOLDER),$(OBJECTS))
 SOURCES		:=	$(addprefix $(SOURCES_FOLDER),$(SOURCES))
 DEPS		:=	$(OBJECTS:.o=.d)
-
 
 ################################################################################
 #                                 COLORS                                       #
@@ -132,7 +131,7 @@ OBJ_COLOR		:=	\033[0;36m
 #                                 RULES                                        #
 ################################################################################
 
-all: header makelib $(NAME)
+all: header setup_mlx makelib $(NAME)
 
 $(NAME): $(OBJECTS)
 	printf "\t\t$(NO_COLOR)All objects for $(INFO_COLOR)$(PROJECT_NAME) $(NO_COLOR)where successfully created.\n"
@@ -150,11 +149,11 @@ $(OBJECTS_FOLDER)%.o: $(SOURCES_FOLDER)%.c .DBG.$(DEBUG) .BNS.$(BONUS)
 	printf "%-50s \r"
 	printf "\t\t\t$(NO_COLOR)Creating $(INFO_COLOR)%-30s $(OK_COLOR)✓$(NO_COLOR)\r" "$@"
 
-$(PATH_MLX)/libmlx.a:
-	$(MAKE) -C $(PATH_MLX) all --quiet
-	printf "\033[32;1m%s OK%40.40s\n\033[0m" $(PATH_MLX) ""
+$(MLX_FOLDER)/libmlx.a:
+	$(MAKE) -C $(MLX_FOLDER) all --quiet
+	printf "\033[32;1m%s OK%40.40s\n\033[0m" $(MLX_FOLDER) ""
 
-makelib: $(PATH_MLX)/libmlx.a
+makelib: $(MLX_FOLDER)/libmlx.a
 ifneq "$(wildcard $(LIBFT_FOLDER) )" ""
 	$(MAKE) -C $(LIBFT_FOLDER)
 endif
@@ -173,14 +172,21 @@ clean: header
 ifneq "$(wildcard $(LIBFT_FOLDER) )" ""
 	$(MAKE) -C $(LIBFT_FOLDER) clean
 endif
+ifneq "$(wildcard $(MLX_FOLDER) )" ""
+	$(MAKE) -C $(MLX_FOLDER) clean --quiet --jobs
+	printf "\t\t$(INFO_COLOR)MinilibX $(NO_COLOR)Clean $(INFO_COLOR)MinilibX$(NO_COLOR).\n"
+endif
 	rm -f $(OBJECTS)
 
 fclean: clean
 ifneq "$(wildcard $(LIBFT_FOLDER) )" ""
 	$(MAKE) -C $(LIBFT_FOLDER) fclean
-	printf "\t\t$(INFO_COLOR)LibFt $(NO_COLOR)Removed $(INFO_COLOR)Libft$(NO_COLOR).\n"
+	printf "\t\t$(INFO_COLOR)LibFt $(NO_COLOR)Clean $(INFO_COLOR)Libft$(NO_COLOR).\n"
 endif
-	$(MAKE) -C $(PATH_MLX) clean --quiet --jobs
+ifneq "$(wildcard $(MLX_FOLDER) )" ""
+	rm -rf $(MLX_FOLDER)
+	printf "\t\t$(INFO_COLOR)MinilibX $(NO_COLOR)Removed $(INFO_COLOR)MinilibX$(NO_COLOR).\n"
+endif
 	rm -f $(NAME)
 	rm -rf $(OBJECTS_FOLDER)
 	rm -f .DBG.* .BNS.*
@@ -191,5 +197,5 @@ re: fclean all
 .PHONY: all re clean fclean makelib config
 
 -include ./Templates/header.mk ./Templates/asan.mk ./Templates/mallocator.mk \
-	./Templates/debug.mk ./Templates/bonus.mk
+	./Templates/debug.mk ./Templates/bonus.mk ./Templates/setup_mlx.mk
 -include ./Templates/norm.mk ./Templates/coffee.mk

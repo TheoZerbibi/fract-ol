@@ -2,6 +2,9 @@
 fractol
 *.out
 
+#MinilibX
+minilibx-linux/
+
 #object files
 objs/
 *.o

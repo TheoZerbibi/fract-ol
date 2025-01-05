@@ -6,24 +6,22 @@
 /*   By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 21:13:32 by thzeribi          #+#    #+#             */
-/*   Updated: 2024/02/21 12:22:00 by thzeribi         ###   ########.fr       */
+/*   Updated: 2025/01/05 04:22:43 by thzeribi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
 void
-	my_mlx_pixel_put(t_img *img, int x, int y, int color)
+    my_mlx_pixel_put(t_img *image, int x, int y, int color)
 {
-	char	*pixel;
+    char    *dst;
 
-	pixel = img->addr + (y * img->size_line + x * (img->bpp / 8));
-	*(int *)pixel = color;
-}
+    if (x < 0 || x >= image->width || y < 0 || y >= image->height)
+        return;
 
-int	create_trgb(int t, int r, int g, int b)
-{
-	return (t << 24 | r << 16 | g << 8 | b);
+    dst = image->addr + (y * image->size_line + x * (image->bpp / 8));
+    *(unsigned int*)dst = color;
 }
 
 void

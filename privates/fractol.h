@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/20 15:01:30 by mjacquet          #+#    #+#             */
-/*   Updated: 2024/02/22 07:56:25 by thzeribi         ###   ########.fr       */
+/*   Created: 2022/09/20 15:01:30 by thzeribi          #+#    #+#             */
+/*   Updated: 2025/01/05 02:47:16 by thzeribi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,7 @@ int		keypress(int keycode, t_data *datafractol);
 int		mouse(int keycode, int x, int y, t_data *data);
 void	reset_img(t_data *data);
 void	my_mlx_pixel_put(t_img *data, int x, int y, int color);
-int		create_trgb(int t, int r, int g, int b);
-int		make_color(t_data *data, int iteration);
-void	change_color_shift(t_data *data);
+
 
 int		draw_usage(t_data *data, int col);
 void	usage_background(t_data *data, int color);
@@ -53,11 +51,11 @@ void	exit_init(t_data *data);
 void	exit_usage(t_data *data);
 
 void	init_mandelbrot(t_data *data);
-int     is_mandelbrot(t_data *data, double cr, double ci);
+double  is_mandelbrot_smooth(t_data *data, double cr, double ci);
 int		mandelbrot(t_data *data);
 
 void	init_burning_ship(t_data *data);
-int     is_burningship(t_data *data, double cr, double ci);
+double  is_burningship_smooth(t_data *data, double cr, double ci);
 int	    burning_ship(t_data *data);
 
 #ifdef BONUS

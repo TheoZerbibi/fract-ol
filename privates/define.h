@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/15 18:57:39 by mjacquet          #+#    #+#             */
-/*   Updated: 2024/02/22 07:55:08 by thzeribi         ###   ########.fr       */
+/*   Created: 2022/09/15 18:57:39 by thzeribi          #+#    #+#             */
+/*   Updated: 2025/01/05 07:10:01 by thzeribi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,15 @@ enum e_fractal_set
 };
 
 # ifndef MAX_ITER
-#  define MAX_ITER 200
+#  ifdef BONUS
+#   define MAX_ITER 300
+#  else
+#   define MAX_ITER 100
+#  endif
 # endif
 
 # define TITLE "Fractol"
+# define NUM_PALETTES 3
 
 # define BLACK		"\e[30m"
 # define RED		"\e[31m"

@@ -6,124 +6,140 @@
 /*   By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:05:36 by thzeribi          #+#    #+#             */
-/*   Updated: 2024/02/22 07:21:00 by thzeribi         ###   ########.fr       */
+/*   Updated: 2025/01/05 02:45:26 by thzeribi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void
-	change_color_shift(t_data *data)
-{
-	if (data->fractal.color_shift == 5)
+t_color palette1[] = {
+	{66, 30, 15},    // Brun foncé
+	{25, 7, 26},     // Violet foncé
+	{9, 1, 47},      // Bleu marine
+	{4, 4, 73},      // Bleu profond
+	{0, 7, 100},     // Bleu intense
+	{12, 44, 138},   // Bleu moyen
+	{24, 82, 177},   // Bleu clair
+	{57, 125, 209},  // Bleu lumineux
+	{134, 181, 229}, // Bleu pâle
+	{211, 236, 248}, // Bleu très pâle
+	{241, 233, 191}, // Jaune pâle
+	{248, 201, 95},  // Orange clair
+	{255, 170, 0},   // Orange
+	{204, 128, 0},   // Orange foncé
+	{153, 87, 0},    // Brun clair
+	{106, 52, 3}     // Brun
+};
+
+t_color palette2[] = {
+	{148, 0, 211},    // Violet
+	{75, 0, 130},     // Indigo
+	{0, 0, 255},      // Bleu
+	{0, 255, 0},      // Vert
+	{255, 255, 0},    // Jaune
+	{255, 127, 0},    // Orange
+	{255, 0, 0}       // Rouge
+};
+
+t_color palette3[] = {
+	{7, 7, 7},
+	{31, 7, 7},
+	{47, 15, 7},
+	{71, 15, 7},
+	{87, 23, 7},
+	{103, 31, 7},
+	{119, 31, 7},
+	{143, 39, 7},
+	{159, 47, 7},
+	{175, 63, 7},
+	{191, 71, 7},
+	{199, 71, 7},
+	{223, 79, 7},
+	{223, 87, 7},
+	{223, 87, 7},
+	{215, 95, 7},
+	{215, 95, 7},
+	{215, 103, 15},
+	{207, 111, 15},
+	{207, 119, 15},
+	{207, 127, 15},
+	{207, 135, 23},
+	{199, 135, 23},
+	{199, 143, 23},
+	{199, 151, 31},
+	{191, 159, 31},
+	{191, 159, 31},
+	{191, 167, 39},
+	{191, 167, 39},
+	{191, 175, 47},
+	{183, 175, 47},
+	{183, 183, 47},
+	{183, 183, 55},
+	{207, 207, 111},
+	{223, 223, 159},
+	{239, 239, 199},
+	{255, 255, 255}
+};
+int palette1_size = sizeof(palette1) / sizeof(t_color);
+int palette2_size = sizeof(palette2) / sizeof(t_color);
+int palette3_size = sizeof(palette3) / sizeof(t_color);
+
+double lerp(double a, double b, double t) {
+	return a + t * (b - a);
+}
+
+t_color interpolate(t_color c1, t_color c2, double t) {
+	t_color result;
+	result.r = (int)lerp(c1.r, c2.r, t);
+	result.g = (int)lerp(c1.g, c2.g, t);
+	result.b = (int)lerp(c1.b, c2.b, t);
+	return result;
+}
+
+void change_color_shift(t_data *data) {
+	data->fractal.color_shift++;
+	if (data->fractal.color_shift > NUM_PALETTES)
 		data->fractal.color_shift = 1;
-	else
-		data->fractal.color_shift++;
 }
 
-static int
-	get_red(int color_value)
-{
-	if (color_value >= 0 && color_value <= 255)
-		return (255);
-	else if (color_value > 255 && color_value <= 510)
-		return (255 - (color_value - 255));
-	else if (color_value > 510 && color_value <= 1020)
-		return (0);
-	else if (color_value > 1020 && color_value <= 1275)
-		return (color_value - 1020);
-	else
-		return (255);
-}
-
-static int
-	get_green(int color_value)
-{
-	if (color_value >= 0 && color_value <= 255)
-		return (color_value);
-	else if (color_value > 255 && color_value <= 765)
-		return (255);
-	else if (color_value > 765 && color_value <= 1020)
-		return (255 - (color_value - 765));
-	else if (color_value > 1020 && color_value <= 1275)
-		return (0);
-	else
-		return (255);
-}
-
-static int
-	get_blue(int color_value)
-{
-	if (color_value >= 0 && color_value <= 510)
-		return (0);
-	if (color_value > 510 && color_value <= 765)
-		return (color_value - 510);
-	else
-		return (255);
-}
-
-static void
-	get_shift_offsets(t_data *data, int *r_off, int *g_off, int *b_off)
-{
-	*r_off = 0;
-	*g_off = 0;
-	*b_off = 0;
-
-	if (data->fractal.color_shift == 1)
-	{
-		*r_off += 150;
-		*b_off += 10;
+int make_color(t_data *data, double iteration) {
+	t_color *palettes[NUM_PALETTES] = { palette1, palette2, palette3 };
+	int palette_sizes[NUM_PALETTES] = { sizeof(palette1) / sizeof(t_color), sizeof(palette2) / sizeof(t_color), sizeof(palette3) / sizeof(t_color) };
+	int current_palette = (data->fractal.color_shift - 1) % NUM_PALETTES;
+	t_color *palette = palettes[current_palette];
+	int palette_size = palette_sizes[current_palette];
+	double t = iteration / MAX_ITER;
+	if (t > 1.0)
+		t = 1.0;
+	double scaled_t = t * (palette_size - 1);
+	int index = (int)scaled_t;
+	double frac = scaled_t - index;
+	
+	if (index >= palette_size - 1) {
+		index = palette_size - 2;
+		frac = 1.0;
 	}
-	else if (data->fractal.color_shift == 2)
-	{
-		*r_off += 70;
-		*b_off += 70;
-	}
-	else if (data->fractal.color_shift == 3)
-	{
-		*g_off += 50;
-	}
-	else if (data->fractal.color_shift == 4)
-	{
-		*r_off += 64;
-		*g_off += 64;
-		*b_off += 64;
-	}
-	else
-	{
-		*r_off += 105;
-		*g_off += 77;
-		*b_off += 247;
-	}
-}
-
-static int
-	clamp_color(int c)
-{
-	if (c < 0)
-		c = 0;
-	else if (c > 255)
-		c = 255;
-	return (c);
+	t_color color = interpolate(palette[index], palette[index + 1], frac);
+	return create_trgb(0, clamp_color(color.r), clamp_color(color.g), clamp_color(color.b));
 }
 
 int
-	make_color(t_data *data, int iteration)
-{
-	int color_value;
-	int r, g, b;
-	int r_off, g_off, b_off;
+	create_trgb(int t, int r, int g, int b) {
+	return (t << 24 | r << 16 | g << 8 | b);
+}
 
-	color_value = iteration * 15;
-	r = get_red(color_value);
-	g = get_green(color_value);
-	b = get_blue(color_value);
+int clamp_color(int c) {
+	if (c < 0)
+		return 0;
+	else if (c > 255)
+		return 255;
+	return c;
+}
 
-	get_shift_offsets(data, &r_off, &g_off, &b_off);
-
-	r = clamp_color(r + r_off);
-	g = clamp_color(g + g_off);
-	b = clamp_color(b + b_off);
-
-	return create_trgb(0, r, g, b);
+double
+	smooth_iteration(int iteration, double zr, double zi) {
+    if (iteration >= MAX_ITER)
+        return (double)iteration;
+    double z_squared = zr * zr + zi * zi;
+    return iteration + 1 - log(log(sqrt(z_squared))) / log(2);
 }
