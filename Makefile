@@ -6,7 +6,7 @@
 #    By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/19 12:13:48 by thzeribi          #+#    #+#              #
-#    Updated: 2025/01/05 16:12:01 by thzeribi         ###   ########.fr        #
+#    Updated: 2026/02/19 12:29:58 by thzeribi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ COMMON_SOURCES := \
                 utils/colors.c \
                 utils/palette.c \
                 utils/exit_case.c \
+								utils/math.c \
                 utils/debug_overlay.c \
                 utils/debug_draw.c \
                 utils/space_palette.c \
@@ -62,6 +63,7 @@ MANDATORY_SOURCES := \
 
 BONUS_SOURCES := \
                 bonus/threads.c \
+                bonus/thread_affinity.c \
                 sets/mandelbrot/mandelbrot_bonus.c \
                 sets/burning_ship/burning_ship_bonus.c \
                 sets/julia/julia_bonus.c \

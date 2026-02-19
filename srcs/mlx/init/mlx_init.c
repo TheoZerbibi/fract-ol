@@ -6,7 +6,7 @@
 /*   By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 05:33:14 by thzeribi          #+#    #+#             */
-/*   Updated: 2024/02/22 07:50:22 by thzeribi         ###   ########.fr       */
+/*   Updated: 2026/02/19 10:16:41 by thzeribi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ int
 	if (!data->mlx.mlx)
 		return (FALSE);
 	mlx_get_screen_size(data->mlx.mlx, &data->win_width, &data->win_height);
-  if (data->win_width > 1920)
-    data->win_width = 1920;
-  if (data->win_height > 1080)
-    data->win_height = 1080;
+	if (data->win_width > 1920)
+		data->win_width = 1920;
+	if (data->win_height > 1080)
+		data->win_height = 1080;
 	data->mlx.win = mlx_new_window(data->mlx.mlx, data->win_width,
 			data->win_height, TITLE);
 	if (!data->mlx.win)

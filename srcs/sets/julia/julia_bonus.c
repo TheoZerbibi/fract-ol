@@ -6,11 +6,14 @@
 /*   By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 16:14:16 by thzeribi          #+#    #+#             */
-/*   Updated: 2025/01/05 16:16:27 by thzeribi         ###   ########.fr       */
+/*   Updated: 2026/02/19 12:18:17 by thzeribi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#define _GNU_SOURCE
 #include "bonus.h"
 
-int julia_bonus(t_data *data) { return (run_threaded_render(data)); }
+int
+	julia_bonus(t_data *data)
+{
+	return (run_threaded_render(data));
+}

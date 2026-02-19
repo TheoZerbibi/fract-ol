@@ -44,7 +44,7 @@ int				ft_isdigit(int c);
 int				ft_isprint(int c);
 int				ft_isspace(int c);
 int				ft_atoi(const char *str);
-double		ft_atof(const char *str);
+double			ft_atof(const char *str);
 long			ft_atol(const char *str);
 void			ft_bzero(void *s, size_t n);
 int				ft_check_int_limit(const char *str);

@@ -6,14 +6,14 @@
 /*   By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 16:14:16 by thzeribi          #+#    #+#             */
-/*   Updated: 2025/01/05 16:16:27 by thzeribi         ###   ########.fr       */
+/*   Updated: 2026/02/19 11:05:18 by thzeribi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-#include <stdlib.h>
 
-static int	escapes(double cr, double ci, int max_iter)
+static int
+	escapes(double cr, double ci, int max_iter)
 {
 	double	zr;
 	double	zi;
@@ -36,7 +36,8 @@ static int	escapes(double cr, double ci, int max_iter)
 	return (i < max_iter);
 }
 
-static void	record_hit(t_data *data, double zr, double zi)
+static void
+	record_hit(t_data *data, double zr, double zi)
 {
 	int	px;
 	int	py;
@@ -50,7 +51,8 @@ static void	record_hit(t_data *data, double zr, double zi)
 		data->histogram[py * data->win_width + px]++;
 }
 
-static void	trace_orbit(t_data *data, double cr, double ci)
+static void
+	trace_orbit(t_data *data, double cr, double ci)
 {
 	double	zr;
 	double	zi;
@@ -74,7 +76,8 @@ static void	trace_orbit(t_data *data, double cr, double ci)
 	}
 }
 
-void	init_buddhabrot(t_data *data)
+void
+	init_buddhabrot(t_data *data)
 {
 	int	total;
 
@@ -96,7 +99,8 @@ void	init_buddhabrot(t_data *data)
 		data->histogram[total] = 0;
 }
 
-void	sample_buddhabrot(t_data *data, int num_samples)
+void
+	sample_buddhabrot(t_data *data, int num_samples)
 {
 	int		i;
 	double	cr;

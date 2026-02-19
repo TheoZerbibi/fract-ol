@@ -1,19 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   burning_ship_bonus.c                               :+:      :+:    :+:   */
+/*   math.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/05 16:14:16 by thzeribi          #+#    #+#             */
-/*   Updated: 2026/02/19 12:18:15 by thzeribi         ###   ########.fr       */
+/*   Created: 2026/02/19 11:43:01 by thzeribi          #+#    #+#             */
+/*   Updated: 2026/02/19 11:44:47 by thzeribi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "bonus.h"
+#include "fractol.h"
 
-int
-	burningship_bonus(t_data *data)
+double
+	fast_log2(double val)
 {
-	return (run_threaded_render(data));
+	t_bit_hack	hack;
+
+	hack.d = val;
+	return ((double)((hack.i >> 52) - 1023)
+		+ (double)(hack.i & 0x000FFFFFFFFFFFFF) / 4503599627370496.0);
 }

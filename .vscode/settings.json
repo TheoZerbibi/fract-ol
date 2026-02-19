@@ -1,9 +1,12 @@
 {
     "files.associations": {
-        "__config": "cpp",
-        "bitset": "c",
-        "format": "c",
-        "pthread.h": "c",
-        "bonus.h": "c"
+      "__config": "cpp",
+      "bitset": "c",
+      "format": "c",
+      "pthread.h": "c",
+      "bonus.h": "c",
+      "fractol.h": "c",
+      "stdio.h": "c",
+      "stat.h": "c"
     }
 }
