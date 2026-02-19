@@ -12,96 +12,40 @@
 
 #include "fractol.h"
 
-/**
- ** @name is_burningship_smooth(); [Function]
- ** @brief Determine if a point is in the Burning Ship fractal.
- ** @param t_data *data
- ** @param double cr Real part of the complex number
- ** @param double ci Imaginary part of the complex number
- ** @return Number of iterations or -1 if the point is in the set
- **/
-double is_burningship_smooth(t_data *data, double cr, double ci)
-{
-	double zr = 0.0;
-	double zi = 0.0;
-	double zr2 = 0.0;
-	double zi2 = 0.0;
-	int i = 0;
-	int max_iter = data->fractal.max_iterations + data->fractal.resolution_shift;
+static void render_pixel(t_data *data, unsigned int *px, double cr, double ci) {
+  double it;
 
-	while (i < max_iter)
-	{
-		zr = fabs(zr);
-		zi = fabs(zi);
-		zr2 = zr * zr;
-		zi2 = zi * zi;
-		if (zr2 + zi2 > 4.0)
-		{
-			double log_zn = log(zr2 + zi2) / 2.0;
-			double nu = log(log_zn / log(2)) / log(2);
-			double smooth_iter = i + 1 - nu;
-			return smooth_iter;
-		}
-		double temp = zr2 - zi2 + cr;
-		zi = 2.0 * zr * zi + ci;
-		zr = temp;
-		i++;
-	}
-	return (double)max_iter;
+  it = data->fractal.iterate(data, cr, ci);
+  if (it >= data->fractal.max_iterations)
+    *px = create_trgb(0, 0, 0, 0);
+  else
+    *px = make_color(data, it);
 }
 
-/**
- ** @name init_burningship();
- ** @brief Initialize the Burning Ship fractal parameters.
- ** @param t_data *data
- **/
-void init_burning_ship(t_data *data)
-{
-	data->math.min_r = -2.0;
-	data->math.max_r = 1.0;
-	data->math.min_i = -2.0;
-	data->math.max_i = 2.0;
-	data->fractal.color_shift = 3;
-	data->fractal.max_iterations = MAX_ITER;
-	data->fractal.resolution_shift = 0;
+static void render_row(t_data *data, unsigned int *row, int y, double *step) {
+  int x;
+  double ci;
+
+  ci = data->math.min_i + y * step[1];
+  x = 0;
+  while (x < data->win_width) {
+    render_pixel(data, &row[x], data->math.min_r + x * step[0], ci);
+    x++;
+  }
 }
 
-typedef struct s_complex
-{
-	double re;
-	double im;
-}   t_complex;
+int burning_ship(t_data *data) {
+  unsigned int *pixel;
+  double step[2];
+  int y;
 
-/**
- ** @name burning_ship();
- ** @brief Draw the Burning Ship fractal.
- ** @param t_data *data
- ** @return TRUE [1]
- **/
-int burning_ship(t_data *data)
-{
-	int x, y;
-	double pr, pi;
-	double it;
-	double step_r = (data->math.max_r - data->math.min_r) / (double)data->win_width;
-	double step_i = (data->math.max_i - data->math.min_i) / (double)data->win_height;
-	t_complex c;
-
-	for (y = 0; y < data->win_height; y++)
-	{
-		pi = data->math.min_i + y * step_i;
-		for (x = 0; x < data->win_width; x++)
-		{
-			pr = data->math.min_r + x * step_r;
-			c.re = pr;
-			c.im = pi;
-			it = is_burningship_smooth(data, pr, pi);
-
-			if (it < (double)data->fractal.max_iterations)
-				my_mlx_pixel_put(&data->image, x, y, make_color(data, it));
-			else
-				my_mlx_pixel_put(&data->image, x, y, create_trgb(0, 0, 0, 0));
-		}
-	}
-	return (1);
+  pixel = (unsigned int *)data->image.addr;
+  step[0] = (data->math.max_r - data->math.min_r) / (double)data->win_width;
+  step[1] = (data->math.max_i - data->math.min_i) / (double)data->win_height;
+  y = 0;
+  while (y < data->win_height) {
+    render_row(data, pixel + y * (data->image.size_line / 4), y, step);
+    y++;
+  }
+  return (TRUE);
 }

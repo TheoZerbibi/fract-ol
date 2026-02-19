@@ -15,134 +15,43 @@
 # include "bonus.h"
 #endif
 
-/**
-** @name lower_set_name(); [Static Function]
-** @brief Call by main function, this function lower the set name
-** to avoid case sensitive.
-**
-** @param char *set 
-**/
-static void lower_set_name(char *set)
-{
-	int i;
-
-	i = 0;
-	while (set[i])
-	{
-		set[i] = ft_tolower(set[i]);
-		i++;
-	}
+int draw_fractol(t_data *data) {
+  update_fps(data);
+  data->fractal.draw(data);
+  if (data->show_usage)
+    usage_background(data, 0x000222222);
+  if (data->perf.show_debug)
+    debug_background(data, 0x00222222);
+  mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->image.image, 0,
+                          0);
+  if (data->show_usage)
+    draw_usage(data, 0xEEEEEE);
+  draw_debug_overlay(data, 0x00EEEEEE);
+  return (0);
 }
 
-/**
-** @name draw_fractol();
-** @brief Call by main function, this function call and draw the fractal set
-** compared to fractol->set defined earlier.
-**
-** @param t_fractol *fractol
-**/
-int
-	draw_fractol(t_data *data)
-{
-	data->fractal.draw(data);
-	if (data->show_usage)
-		usage_background(data, 0x000222222);
-	mlx_put_image_to_window(data->mlx.mlx, \
-		data->mlx.win, data->image.image, 0, 0);
-	if (data->show_usage)
-		draw_usage(data, 0xEEEEEE);
-	return (0);
+static int parse_julia_args(int argc, char **argv, t_data *data) {
+  if (argc == 4) {
+    data->fractal.julia_shiftx = ft_atof(argv[2]);
+    data->fractal.julia_shifty = ft_atof(argv[3]);
+    data->fractal.julia_locked = 1;
+  } else
+    data->fractal.julia_locked = 0;
+  return (TRUE);
 }
 
-/**
-** @name init_fractol_set(); [Static Function]
-** @brief Call by main function, this function init the fractol set
-** among a predefined enum class call e_fractal_set{}.
-**
-** @param char *set
-** @param t_data *data
-** @return TRUE [1]
-** @return FALSE [0]
-**/
-#ifdef BONUS
-static int
-	init_fractol_set(char *set, t_data *data)
-{
-	lower_set_name(set);
-	if (ft_strcmp(set, "mandelbrot") == 0
-		|| (ft_strlen(set) == 1 && set[0] == 'm'))
-	{
-		data->fractal.draw = &mandelbrot_bonus;
-		init_mandelbrot(data);
-		data->set = MANDELBROT;
-	}
-	else if (ft_strcmp(set, "julia") == 0
-		|| (ft_strlen(set) == 1 && set[0] == 'j'))
-		data->set = JULIA;
-	else if (ft_strcmp(set, "buddhabrot") == 0
-		|| (ft_strlen(set) == 1 && set[0] == 'b'))
-		data->set = BUDDHABROT;
-	else if (ft_strcmp(set, "burning_ship") == 0
-		|| (ft_strlen(set) == 2 && set[0] == 'b' && set[1] == 's'))
-	{
-		data->fractal.draw = &burningship_bonus;
-		init_burning_ship(data);
-		data->set = BURNING_SHIP;
-	} else
-		return (-1);
-	return (TRUE);
-}
-#else
-static int
-	init_fractol_set(char *set, t_data *data)
-{
-	lower_set_name(set);
-	if (ft_strcmp(set, "mandelbrot") == 0
-		|| (ft_strlen(set) == 1 && set[0] == 'm'))
-	{
-		data->fractal.draw = &mandelbrot;
-		init_mandelbrot(data);
-		data->set = MANDELBROT;
-	}
-	else if (ft_strcmp(set, "julia") == 0
-		|| (ft_strlen(set) == 1 && set[0] == 'j'))
-		data->set = JULIA;
-	else if (ft_strcmp(set, "buddhabrot") == 0
-		|| (ft_strlen(set) == 1 && set[0] == 'b'))
-		data->set = BUDDHABROT;
-	else if (ft_strcmp(set, "burning_ship") == 0
-		|| (ft_strlen(set) == 2 && set[0] == 'b' && set[1] == 's'))
-	{
-		data->fractal.draw = &burning_ship;
-		init_burning_ship(data);
-		data->set = BURNING_SHIP;
-	} else
-		return (-1);
-	return (TRUE);
-}
-#endif
+int main(int argc, char *argv[]) {
+  t_data data;
 
-/**
-** @name main();
-** @brief This function is the main function.
-**
-** @param int argc
-** @param char *argv[]
-**/
-
-int	main(int argc, char *argv[])
-{
-	t_data	data;
-#ifdef BONUS
-	printf("BONUS ENABLED\n");
-#endif
-	data = (t_data){.show_usage = TRUE};
-	if (!_init_mlx(&data) || !_init_img(&data))
-		exit_init(&data);
-	if (argc != 2 || init_fractol_set(argv[1], &data) == -1)
-		exit_usage(&data);
-	mlx_loop_hook(data.mlx.mlx, &draw_fractol, &data);
-	mlx_loop(data.mlx.mlx);
-	_end_mlx(&data, 0);
-	return (0);
+  data = (t_data){.show_usage = TRUE};
+  if (!_init_mlx(&data) || !_init_img(&data))
+    exit_init(&data);
+  if (argc < 2 || argc > 4 || init_fractol_set(argv[1], &data) == -1)
+    exit_usage(&data);
+  if (data.set == JULIA)
+    parse_julia_args(argc, argv, &data);
+  mlx_loop_hook(data.mlx.mlx, &draw_fractol, &data);
+  mlx_loop(data.mlx.mlx);
+  _end_mlx(&data, 0);
+  return (0);
 }

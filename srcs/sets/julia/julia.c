@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mandelbrot.c                                       :+:      :+:    :+:   */
+/*   julia.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/21 10:44:50 by thzeribi          #+#    #+#             */
-/*   Updated: 2025/01/05 07:08:19 by thzeribi         ###   ########.fr       */
+/*   Created: 2025/01/05 16:14:16 by thzeribi          #+#    #+#             */
+/*   Updated: 2025/01/05 16:16:27 by thzeribi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void render_row(t_data *data, unsigned int *row, int y, double *step) {
   }
 }
 
-int mandelbrot(t_data *data) {
+int julia(t_data *data) {
   unsigned int *pixel;
   double step[2];
   int y;

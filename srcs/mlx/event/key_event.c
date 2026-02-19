@@ -12,76 +12,70 @@
 
 #include "fractol.h"
 
-static void move(t_data *data, char direction)
-{
-	t_math *math = &data->math;
-	double width = math->max_r - math->min_r;
-	double height = math->max_i - math->min_i;
+static void move_vertical(t_data *data, char direction) {
+  double height;
 
-	if (data->set == BURNING_SHIP)
-	{
-		if (direction == 'U')
-		{
-			math->min_i -= 0.1 * height;
-			math->max_i -= 0.1 * height;
-		}
-		if (direction == 'D')
-		{
-			math->min_i += 0.1 * height;
-			math->max_i += 0.1 * height;
-		}
-	}
-	else
-	{
-		if (direction == 'U')
-		{
-			math->min_i += 0.1 * height;
-			math->max_i += 0.1 * height;
-		}
-		if (direction == 'D')
-		{
-			math->min_i -= 0.1 * height;
-			math->max_i -= 0.1 * height;
-		}
-	}
-	if (direction == 'R')
-	{
-		math->min_r += 0.1 * width;
-		math->max_r += 0.1 * width;
-	}
-	if (direction == 'L')
-	{
-		math->min_r -= 0.1 * width;
-		math->max_r -= 0.1 * width;
-	}
-	return ;
+  height = data->math.max_i - data->math.min_i;
+  if (data->set == BURNING_SHIP) {
+    if (direction == 'U') {
+      data->math.min_i -= 0.1 * height;
+      data->math.max_i -= 0.1 * height;
+    }
+    if (direction == 'D') {
+      data->math.min_i += 0.1 * height;
+      data->math.max_i += 0.1 * height;
+    }
+  } else {
+    if (direction == 'U') {
+      data->math.min_i += 0.1 * height;
+      data->math.max_i += 0.1 * height;
+    }
+    if (direction == 'D') {
+      data->math.min_i -= 0.1 * height;
+      data->math.max_i -= 0.1 * height;
+    }
+  }
 }
 
-/**
-** @name keypress();
-** @brief Call when key is pressed. This function is init
-** by mlx_key_hook() from MLX Lib in setup_hook() function.
-**
-** @param int keycode
-** @param t_data *data
-** @return keycode
-**/
-int
-	keypress(int keycode, t_data *data)
-{
-	if (keycode == K_ESC)
-		_end_mlx(data, 0);
-	if (keycode == K_SPACE)
-		data->show_usage = !data->show_usage;
-	if (keycode == K_SHIFT)
-		change_color_shift(data);
-	if (keycode == K_W || keycode == K_UP)
-		move(data, 'U');
-	if (keycode == K_S || keycode == K_DOWN)
-		move(data, 'D');
-	if (keycode == K_A || keycode == K_LEFT)
-		move(data, 'L');
-	if (keycode == K_D || keycode == K_RIGHT)
-		move(data, 'R');
-	return (keycode);
+static void move_horizontal(t_data *data, char direction) {
+  double width;
+
+  width = data->math.max_r - data->math.min_r;
+  if (direction == 'R') {
+    data->math.min_r += 0.1 * width;
+    data->math.max_r += 0.1 * width;
+  }
+  if (direction == 'L') {
+    data->math.min_r -= 0.1 * width;
+    data->math.max_r -= 0.1 * width;
+  }
+}
+
+static void move(t_data *data, char direction) {
+  if (direction == 'U' || direction == 'D')
+    move_vertical(data, direction);
+  else
+    move_horizontal(data, direction);
+}
+
+int keypress(int keycode, t_data *data) {
+  if (keycode == K_ESC)
+    _end_mlx(data, 0);
+  if (keycode == K_SPACE)
+    data->fractal.julia_locked = !data->fractal.julia_locked;
+  if (keycode == K_CTRL)
+    data->show_usage = !data->show_usage;
+  if (keycode == K_SHIFT)
+    change_color_shift(data);
+  if (keycode == K_E)
+    data->perf.show_debug = !data->perf.show_debug;
+  if (keycode == K_W || keycode == K_UP)
+    move(data, 'U');
+  if (keycode == K_S || keycode == K_DOWN)
+    move(data, 'D');
+  if (keycode == K_A || keycode == K_LEFT)
+    move(data, 'L');
+  if (keycode == K_D || keycode == K_RIGHT)
+    move(data, 'R');
+  return (keycode);
 }

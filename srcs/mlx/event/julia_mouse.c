@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hook_init.c                                        :+:      :+:    :+:   */
+/*   julia_mouse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/07 05:35:19 by thzeribi          #+#    #+#             */
-/*   Updated: 2024/02/22 07:47:36 by thzeribi         ###   ########.fr       */
+/*   Created: 2025/01/05 16:14:16 by thzeribi          #+#    #+#             */
+/*   Updated: 2025/01/05 16:16:27 by thzeribi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void setup_hook(t_data *data) {
-  mlx_hook(data->mlx.win, KeyPress, KeyPressMask, &keypress, data);
-  mlx_hook(data->mlx.win, ButtonPress, ButtonPressMask, &mouse, data);
-  mlx_hook(data->mlx.win, 6, (1L << 6), &julia_mouse_move, data);
-  mlx_hook(data->mlx.win, 33, (1L << 17), _end_mlx, data);
+int julia_mouse_move(int x, int y, t_data *data) {
+  double cr;
+  double ci;
+
+  if (data->set != JULIA || data->fractal.julia_locked)
+    return (0);
+  cr = -2.0 + ((double)x / data->win_width) * 4.0;
+  ci = -2.0 + ((double)y / data->win_height) * 4.0;
+  data->fractal.julia_shiftx = cr;
+  data->fractal.julia_shifty = ci;
+  return (0);
 }

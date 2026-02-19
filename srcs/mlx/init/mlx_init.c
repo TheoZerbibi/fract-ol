@@ -53,6 +53,10 @@ int
 	if (!data->mlx.mlx)
 		return (FALSE);
 	mlx_get_screen_size(data->mlx.mlx, &data->win_width, &data->win_height);
+  if (data->win_width > 1920)
+    data->win_width = 1920;
+  if (data->win_height > 1080)
+    data->win_height = 1080;
 	data->mlx.win = mlx_new_window(data->mlx.mlx, data->win_width,
 			data->win_height, TITLE);
 	if (!data->mlx.win)

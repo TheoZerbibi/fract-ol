@@ -11,37 +11,37 @@
 /* ************************************************************************** */
 
 #ifdef BONUS
-# ifndef BONUS_H
-# define BONUS_H
+#ifndef BONUS_H
+#define BONUS_H
 
-# include "fractol.h"
-# include <pthread.h>
-# include <sched.h>
-# include <math.h>
+#include "fractol.h"
+#include <math.h>
+#include <pthread.h>
+#include <sched.h>
 
-typedef struct s_thread_data	t_thread_data;
-typedef int	(*t_inside_func)(double, double);
-typedef double	(*t_iterate_func)(t_data *, double, double);
+#define MAX_THREADS 128
 
-struct s_thread_data
-{
-	t_data	*data;
-	int		start_line;
-	int		end_line;
-	double	step_r;
-	double	step_i;
-	int		thread_id;
+typedef struct s_thread_data t_thread_data;
+
+struct s_thread_data {
+  t_data *data;
+  int start_line;
+  int end_line;
+  double step_r;
+  double step_i;
+  int thread_id;
 };
 
-void	set_thread_affinity(int thread_id);
-void	*thread_render_generic(void *arg);
-void	set_thread_affinity(int thread_id);
-void	*thread_render_generic(void *arg);
+void *thread_render_generic(void *arg);
+void fill_thread_infos(t_thread_data *info, t_data *data, double *step);
+int launch_threads(pthread_t *thr, t_thread_data *info, int n);
+int run_threaded_render(t_data *data);
 
-int		mandelbrot_bonus(t_data *data);
-int		burningship_bonus(t_data *data);
-int		inside_main_cardioid(double cr, double ci);
-int		inside_period2_bulb(double cr, double ci);
+int mandelbrot_bonus(t_data *data);
+int burningship_bonus(t_data *data);
+int julia_bonus(t_data *data);
+int buddhabrot_bonus(t_data *data);
+int phoenix_bonus(t_data *data);
 
-# endif
+#endif
 #endif

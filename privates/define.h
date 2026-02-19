@@ -20,7 +20,8 @@ enum e_fractal_set
 	MANDELBROT,
 	JULIA,
 	BUDDHABROT,
-	BURNING_SHIP
+	BURNING_SHIP,
+	PHOENIX
 };
 
 # ifndef MAX_ITER
@@ -32,7 +33,9 @@ enum e_fractal_set
 # endif
 
 # define TITLE "Fractol"
+# define INITIAL_ZOOM 4.0
 # define NUM_PALETTES 3
+# define BUDDHA_SAMPLES 500000
 
 # define BLACK		"\e[30m"
 # define RED		"\e[31m"

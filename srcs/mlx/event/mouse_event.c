@@ -11,42 +11,53 @@
 /* ************************************************************************** */
 
 #include "fractol.h"
-#include <stdio.h>
 
-/**
- ** @name mouse();
- ** @brief Handle mouse events for zooming.
- ** @param int keycode
- ** @param int x X position of the mouse
- ** @param int y Y position of the mouse
- ** @param t_data *data
- ** @return 1
- **/
-int
-mouse(int keycode, int x, int y, t_data *data)
-{
-	double cx;
-	double cy;
-	double width;
-	double height;
-	double zoom_factor;
+static double get_zoom_factor(int keycode) {
+  if (keycode == 4)
+    return (0.9);
+  if (keycode == 5)
+    return (1.1);
+  return (0.0);
+}
 
-	cx = data->math.min_r + ((double)x * (data->math.max_r - data->math.min_r)) / data->win_width;
-	if (data->set == BURNING_SHIP)
-		cy = data->math.min_i + ((double)y * (data->math.max_i - data->math.min_i)) / data->win_height;
-	else
-		cy = data->math.max_i - ((double)y * (data->math.max_i - data->math.min_i)) / data->win_height;
-	width = data->math.max_r - data->math.min_r;
-	height = data->math.max_i - data->math.min_i;
-	if (keycode == 4)
-		zoom_factor = 0.9;
-	else if (keycode == 5)
-		zoom_factor = 1.1;
-	else
-		return (1);
-	data->math.min_r = cx - (cx - data->math.min_r) * zoom_factor;
-	data->math.max_r = cx + (data->math.max_r - cx) * zoom_factor;
-	data->math.min_i = cy - (cy - data->math.min_i) * zoom_factor;
-	data->math.max_i = cy + (data->math.max_i - cy) * zoom_factor;
-	return (1);
+static void calc_cursor_pos(t_data *data, int x, int y, double *pos) {
+  double w;
+  double h;
+
+  w = data->math.max_r - data->math.min_r;
+  h = data->math.max_i - data->math.min_i;
+  pos[0] = data->math.min_r + ((double)x * w) / data->win_width;
+  if (data->set == BURNING_SHIP)
+    pos[1] = data->math.min_i + ((double)y * h) / data->win_height;
+  else
+    pos[1] = data->math.max_i - ((double)y * h) / data->win_height;
+}
+
+void update_adaptive_iter(t_data *data) {
+  double zoom;
+  int iters;
+
+  zoom = INITIAL_ZOOM / (data->math.max_r - data->math.min_r);
+  if (zoom < 1.0)
+    zoom = 1.0;
+  iters = MAX_ITER + (int)(log(zoom) / log(2.0) * 30);
+  if (iters > 500)
+    iters = 500;
+  data->fractal.max_iterations = iters;
+}
+
+int mouse(int keycode, int x, int y, t_data *data) {
+  double pos[2];
+  double zf;
+
+  zf = get_zoom_factor(keycode);
+  if (zf == 0.0)
+    return (1);
+  calc_cursor_pos(data, x, y, pos);
+  data->math.min_r = pos[0] - (pos[0] - data->math.min_r) * zf;
+  data->math.max_r = pos[0] + (data->math.max_r - pos[0]) * zf;
+  data->math.min_i = pos[1] - (pos[1] - data->math.min_i) * zf;
+  data->math.max_i = pos[1] + (data->math.max_i - pos[1]) * zf;
+  update_adaptive_iter(data);
+  return (1);
 }
