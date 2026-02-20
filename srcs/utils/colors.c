@@ -44,14 +44,3 @@ int
 		return (255);
 	return (c);
 }
-
-double
-	smooth_iteration(int iteration, double zr, double zi)
-{
-	double	z_sq;
-
-	if (iteration >= MAX_ITER)
-		return ((double)iteration);
-	z_sq = zr * zr + zi * zi;
-	return (iteration + 1 - log(log(z_sq) * 0.5) / log(2));
-}

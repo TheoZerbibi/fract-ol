@@ -6,7 +6,7 @@
 /*   By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 05:39:15 by thzeribi          #+#    #+#             */
-/*   Updated: 2026/02/19 10:24:49 by thzeribi         ###   ########.fr       */
+/*   Updated: 2026/02/20 14:00:00 by thzeribi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,21 @@ static double
 	if (keycode == 5)
 		return (1.1);
 	return (0.0);
+}
+
+static int
+	zoom_is_valid(t_data *data, double new_min_r, double new_max_r)
+{
+	double	range;
+	double	step;
+
+	range = new_max_r - new_min_r;
+	if (range > INITIAL_ZOOM * 1.5)
+		return (0);
+	step = range / (double)data->win_width;
+	if (step < 1e-13)
+		return (0);
+	return (1);
 }
 
 static void
@@ -42,13 +57,19 @@ void
 {
 	double	zoom;
 	int		iters;
+	int		base;
 
 	zoom = INITIAL_ZOOM / (data->math.max_r - data->math.min_r);
 	if (zoom < 1.0)
 		zoom = 1.0;
-	iters = MAX_ITER + (int)(log(zoom) / log(2.0) * 30);
-	if (iters > 500)
-		iters = 500;
+	base = MAX_ITER / 6;
+	if (base < 50)
+		base = 50;
+	iters = base + (int)(log(zoom) / log(10.0) * (MAX_ITER - base));
+	if (iters < base)
+		iters = base;
+	if (iters > MAX_ITER)
+		iters = MAX_ITER;
 	data->fractal.max_iterations = iters;
 }
 
@@ -57,13 +78,19 @@ int
 {
 	double	pos[2];
 	double	zf;
+	double	new_min_r;
+	double	new_max_r;
 
 	zf = get_zoom_factor(keycode);
 	if (zf == 0.0)
 		return (1);
 	calc_cursor_pos(data, x, y, pos);
-	data->math.min_r = pos[0] - (pos[0] - data->math.min_r) * zf;
-	data->math.max_r = pos[0] + (data->math.max_r - pos[0]) * zf;
+	new_min_r = pos[0] - (pos[0] - data->math.min_r) * zf;
+	new_max_r = pos[0] + (data->math.max_r - pos[0]) * zf;
+	if (!zoom_is_valid(data, new_min_r, new_max_r))
+		return (1);
+	data->math.min_r = new_min_r;
+	data->math.max_r = new_max_r;
 	data->math.min_i = pos[1] - (pos[1] - data->math.min_i) * zf;
 	data->math.max_i = pos[1] + (data->math.max_i - pos[1]) * zf;
 	update_adaptive_iter(data);

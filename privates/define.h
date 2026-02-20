@@ -26,9 +26,9 @@ enum e_fractal_set
 
 # ifndef MAX_ITER
 #  ifdef BONUS
-#   define MAX_ITER 300
+#   define MAX_ITER 2000
 #  else
-#   define MAX_ITER 100
+#   define MAX_ITER 150
 #  endif
 # endif
 

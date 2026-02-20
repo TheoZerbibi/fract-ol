@@ -42,12 +42,11 @@ static void
 	int	px;
 	int	py;
 
-	px = (int)((zr - data->math.min_r) / (data->math.max_r
-				- data->math.min_r) * data->win_width);
-	py = (int)((zi - data->math.min_i) / (data->math.max_i
-				- data->math.min_i) * data->win_height);
-	if (px >= 0 && px < data->win_width && py >= 0
-		&& py < data->win_height)
+	px = (int)((zr - data->math.min_r) / (data->math.max_r - data->math.min_r)
+			* data->win_width);
+	py = (int)((zi - data->math.min_i) / (data->math.max_i - data->math.min_i)
+			* data->win_height);
+	if (px >= 0 && px < data->win_width && py >= 0 && py < data->win_height)
 		data->histogram[py * data->win_width + px]++;
 }
 
@@ -64,8 +63,7 @@ static void
 	sq[0] = 0.0;
 	sq[1] = 0.0;
 	i = 0;
-	while (sq[0] + sq[1] <= 4.0
-		&& i < data->fractal.max_iterations)
+	while (sq[0] + sq[1] <= 4.0 && i < data->fractal.max_iterations)
 	{
 		zi = 2.0 * zr * zi + ci;
 		zr = sq[0] - sq[1] + cr;

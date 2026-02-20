@@ -32,7 +32,6 @@ MLX_FOLDER      := minilibx-linux
 
 COMMON_SOURCES := \
                 main.c \
-                init_set.c \
                 mlx/init/mlx_init.c \
                 mlx/init/hook_init.c \
                 mlx/img/img_utils.c \
@@ -55,6 +54,7 @@ COMMON_SOURCES := \
                 sets/phoenix/phoenix_core.c \
 
 MANDATORY_SOURCES := \
+                init_set.c \
                 sets/mandelbrot/mandelbrot.c \
                 sets/burning_ship/burning_ship.c \
                 sets/julia/julia.c \
@@ -62,19 +62,23 @@ MANDATORY_SOURCES := \
                 sets/phoenix/phoenix.c \
 
 BONUS_SOURCES := \
+                init_set_bonus.c \
                 bonus/threads.c \
                 bonus/thread_affinity.c \
-                sets/mandelbrot/mandelbrot_bonus.c \
-                sets/burning_ship/burning_ship_bonus.c \
-                sets/julia/julia_bonus.c \
-                sets/buddhabrot/buddhabrot_bonus.c \
-                sets/phoenix/phoenix_bonus.c \
+                bonus/simd_utils.c \
+                bonus/simd_mandelbrot.c \
+                bonus/simd_other.c \
+								sets/mandelbrot/mandelbrot_bonus.c \
+								sets/burning_ship/burning_ship_bonus.c \
+								sets/julia/julia_bonus.c \
+								sets/buddhabrot/buddhabrot_bonus.c \
+								sets/phoenix/phoenix_bonus.c \
 
 ################################################################################
 #                                   FLAGS                                      #
 ################################################################################
 
-CFLAGS      := -Wall -Wextra -Werror -MMD -O3
+CFLAGS      := -Wall -Wextra -Werror -MMD -O3 -march=native
 CC          := cc
 LDFLAGS     := -L $(MLX_FOLDER) -lm -lmlx -lXext -lX11
 DBG         := 0

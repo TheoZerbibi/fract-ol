@@ -98,5 +98,9 @@ int
 		move(data, 'L');
 	if (keycode == K_D || keycode == K_RIGHT)
 		move(data, 'R');
+	if (keycode == K_W || keycode == K_UP || keycode == K_S
+		|| keycode == K_DOWN || keycode == K_A || keycode == K_LEFT
+		|| keycode == K_D || keycode == K_RIGHT)
+		update_adaptive_iter(data);
 	return (keycode);
 }

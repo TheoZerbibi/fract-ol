@@ -16,16 +16,18 @@
 
 # include "fractol.h"
 
+# include <immintrin.h>
 # include <math.h>
 # include <pthread.h>
 # include <sched.h>
 # include <stdlib.h>
 
-# define MAX_THREADS 128
+# define MAX_THREADS	128
 
 typedef struct s_thread_data	t_thread_data;
 
-struct s_thread_data {
+struct s_thread_data
+{
 	t_data	*data;
 	int		start_line;
 	int		end_line;
@@ -44,7 +46,14 @@ int		mandelbrot_bonus(t_data *data);
 int		burningship_bonus(t_data *data);
 int		julia_bonus(t_data *data);
 int		buddhabrot_bonus(t_data *data);
-int		make_space_color(double ratio);
 int		phoenix_bonus(t_data *data);
+
+void	put_pixel_simd(t_thread_data *info, int x, int y, long long it);
+void	render_thread_row_remainder(t_thread_data *info,
+			int y, double ci, int x);
+void	simd_mandelbrot(t_thread_data *info, int y, double ci);
+void	simd_julia(t_thread_data *info, int y, double ci);
+void	simd_burningship(t_thread_data *info, int y, double ci);
+void	simd_phoenix(t_thread_data *info, int y, double ci);
 
 #endif

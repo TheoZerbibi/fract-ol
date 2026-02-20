@@ -11,9 +11,6 @@
 /* ************************************************************************** */
 
 #include "fractol.h"
-#ifdef BONUS
-# include "bonus.h"
-#endif
 
 static int
 	parse_julia_args(int argc, char **argv, t_data *data)

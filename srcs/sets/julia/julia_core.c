@@ -56,12 +56,6 @@ static double
 		- fast_log2(fast_log2(sq[0] + sq[1]) * 0.5) * data->math.log_2);
 }
 
-double
-	is_julia(t_data *data, double zr, double zi)
-{
-	return (julia_loop(data, zr, zi));
-}
-
 void
 	init_julia(t_data *data)
 {
@@ -73,5 +67,5 @@ void
 	data->fractal.resolution_shift = 0;
 	data->fractal.max_iterations = MAX_ITER;
 	data->math.log_2 = 1.0 / log(2.0);
-	data->fractal.iterate = &is_julia;
+	data->fractal.iterate = &julia_loop;
 }

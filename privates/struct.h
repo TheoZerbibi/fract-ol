@@ -69,10 +69,6 @@ typedef struct s_math
 	double			center_i;
 	double			center_r;
 	double			log_2;
-	double			z[2];
-	double			sq[2];
-	double			old[2];
-	int				state[2];
 }	t_math;
 
 typedef struct s_fractal

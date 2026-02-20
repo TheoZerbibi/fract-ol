@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_set.c                                         :+:      :+:    :+:   */
+/*   init_set_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/05 16:14:16 by thzeribi          #+#    #+#             */
+/*   Created: 2026/02/20 15:00:00 by thzeribi          #+#    #+#             */
 /*   Updated: 2026/02/20 15:00:00 by thzeribi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "bonus.h"
 
 static void
 	lower_set_name(char *set)
@@ -30,14 +30,14 @@ static int
 {
 	if (ft_strcmp(set, "julia") == 0 || (ft_strlen(set) == 1 && set[0] == 'j'))
 	{
-		data->fractal.draw = &julia;
+		data->fractal.draw = &julia_bonus;
 		init_julia(data);
 		data->set = JULIA;
 	}
 	else if (ft_strcmp(set, "buddhabrot") == 0
 		|| (ft_strlen(set) == 2 && set[0] == 'b' && set[1] == 'b'))
 	{
-		data->fractal.draw = &buddhabrot;
+		data->fractal.draw = &buddhabrot_bonus;
 		init_buddhabrot(data);
 		data->set = BUDDHABROT;
 	}
@@ -52,14 +52,14 @@ static int
 	if (ft_strcmp(set, "burning_ship") == 0
 		|| (ft_strlen(set) == 2 && set[0] == 'b' && set[1] == 's'))
 	{
-		data->fractal.draw = &burning_ship;
+		data->fractal.draw = &burningship_bonus;
 		init_burning_ship(data);
 		data->set = BURNING_SHIP;
 	}
 	else if (ft_strcmp(set, "phoenix") == 0
 		|| (ft_strlen(set) == 1 && set[0] == 'p'))
 	{
-		data->fractal.draw = &phoenix;
+		data->fractal.draw = &phoenix_bonus;
 		init_phoenix(data);
 		data->set = PHOENIX;
 	}
@@ -71,11 +71,16 @@ static int
 int
 	init_fractol_set(char *set, t_data *data)
 {
+	int	ret;
+
+	ret = write(1, "Bonus mode enabled\n", 19);
+	if (ret < 0)
+		return (-1);
 	lower_set_name(set);
 	if (ft_strcmp(set, "mandelbrot") == 0
 		|| (ft_strlen(set) == 1 && set[0] == 'm'))
 	{
-		data->fractal.draw = &mandelbrot;
+		data->fractal.draw = &mandelbrot_bonus;
 		init_mandelbrot(data);
 		data->set = MANDELBROT;
 	}

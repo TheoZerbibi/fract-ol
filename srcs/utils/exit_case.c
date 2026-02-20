@@ -15,7 +15,8 @@
 void
 	exit_init(t_data *data)
 {
-	ft_putstr("\e[1;31mError\nA problem occurred during initialisation !\e[0m\n");
+	ft_putstr("\e[1;31mError\n\e[0m\n");
+	ft_putstr("\e[1;31mA problem occurred during initialisation!\e[0m\n");
 	_end_mlx(data, 1);
 }
 

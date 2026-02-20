@@ -6,18 +6,18 @@
 /*   By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 10:44:50 by thzeribi          #+#    #+#             */
-/*   Updated: 2026/02/19 12:06:54 by thzeribi         ###   ########.fr       */
+/*   Updated: 2026/02/20 14:00:00 by thzeribi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-int
+static int
 	check_main_shapes(double cr, double ci)
 {
-	double	i2;
-	double	tr;
-	double	q;
+	double		i2;
+	double		tr;
+	double		q;
 
 	i2 = ci * ci;
 	tr = cr - 0.25;
@@ -48,35 +48,37 @@ static int
 static double
 	mandelbrot_loop(t_data *data, double cr, double ci)
 {
-	data->math.z[0] = 0.0;
-	data->math.z[1] = 0.0;
-	data->math.sq[0] = 0.0;
-	data->math.sq[1] = 0.0;
-	data->math.old[0] = 0.0;
-	data->math.old[1] = 0.0;
-	data->math.state[0] = 0;
-	data->math.state[1] = 0;
-	while (data->math.sq[0] + data->math.sq[1] <= 4.0
-		&& data->math.state[0] < data->fractal.max_iterations)
+	double	zr;
+	double	zi;
+	double	sq[2];
+	double	old[2];
+	int		state[2];
+
+	zr = 0.0;
+	zi = 0.0;
+	sq[0] = 0.0;
+	sq[1] = 0.0;
+	old[0] = 0.0;
+	old[1] = 0.0;
+	state[0] = 0;
+	state[1] = 0;
+	while (sq[0] + sq[1] <= 4.0 && state[0] < data->fractal.max_iterations)
 	{
-		data->math.z[1] = 2.0 * data->math.z[0] * data->math.z[1] + ci;
-		data->math.z[0] = data->math.sq[0] - data->math.sq[1] + cr;
-		data->math.sq[0] = data->math.z[0] * data->math.z[0];
-		data->math.sq[1] = data->math.z[1] * data->math.z[1];
-		data->math.state[0]++;
-		if (check_period(data->math.z[0], data->math.z[1],
-				data->math.old, &data->math.state[1]))
+		zi = 2.0 * zr * zi + ci;
+		zr = sq[0] - sq[1] + cr;
+		sq[0] = zr * zr;
+		sq[1] = zi * zi;
+		state[0]++;
+		if (check_period(zr, zi, old, &state[1]))
 			return ((double)data->fractal.max_iterations);
 	}
-	if (data->math.state[0] == data->fractal.max_iterations)
-		return ((double)data->math.state[0]);
-	return (data->math.state[0] + 1
-		- fast_log2(fast_log2(data->math.sq[0] + data->math.sq[1]) * 0.5)
-		* data->math.log_2);
+	if (state[0] == data->fractal.max_iterations)
+		return ((double)state[0]);
+	return (state[0] + 1
+		- fast_log2(fast_log2(sq[0] + sq[1]) * 0.5) * data->math.log_2);
 }
 
-double
-	is_mandelbrot(t_data *data, double cr, double ci)
+double	is_mandelbrot(t_data *data, double cr, double ci)
 {
 	if (check_main_shapes(cr, ci))
 		return ((double)data->fractal.max_iterations);

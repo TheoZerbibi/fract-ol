@@ -53,7 +53,6 @@ int		make_space_color(double ratio);
 double	fast_log2(double val);
 double	lerp(double a, double b, double t);
 double	is_mandelbrot(t_data *data, double cr, double ci);
-double	is_julia(t_data *data, double zr, double zi);
 void	setup_hook(t_data *data);
 void	my_mlx_pixel_put(t_img *data, int x, int y, int color);
 void	reset_img(t_data *data);
