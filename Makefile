@@ -43,7 +43,7 @@ COMMON_SOURCES := \
                 utils/colors.c \
                 utils/palette.c \
                 utils/exit_case.c \
-								utils/math.c \
+                utils/math.c \
                 utils/debug_overlay.c \
                 utils/debug_draw.c \
                 utils/space_palette.c \
@@ -62,17 +62,19 @@ MANDATORY_SOURCES := \
                 sets/phoenix/phoenix.c \
 
 BONUS_SOURCES := \
-                init_set_bonus.c \
+                bonus/init_set_bonus.c \
                 bonus/threads.c \
                 bonus/thread_affinity.c \
                 bonus/simd_utils.c \
                 bonus/simd_mandelbrot.c \
-                bonus/simd_other.c \
-								sets/mandelbrot/mandelbrot_bonus.c \
-								sets/burning_ship/burning_ship_bonus.c \
-								sets/julia/julia_bonus.c \
-								sets/buddhabrot/buddhabrot_bonus.c \
-								sets/phoenix/phoenix_bonus.c \
+                bonus/simd_julia.c \
+                bonus/simd_burningship.c \
+                bonus/simd_phoenix.c \
+                sets/mandelbrot/mandelbrot_bonus.c \
+                sets/burning_ship/burning_ship_bonus.c \
+                sets/julia/julia_bonus.c \
+                sets/buddhabrot/buddhabrot_bonus.c \
+                sets/phoenix/phoenix_bonus.c \
 
 ################################################################################
 #                                   FLAGS                                      #
@@ -107,7 +109,7 @@ endif
 
 ifeq ($(BNS), 1)
         SOURCES := $(COMMON_SOURCES) $(BONUS_SOURCES)
-        CFLAGS  += -pthread -DBONUS
+        CFLAGS  += -pthread -DBONUS -D_GNU_SOURCE
         LDFLAGS += -lpthread
         BONUS   := $(BNS)
 else

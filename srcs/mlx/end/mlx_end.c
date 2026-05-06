@@ -13,7 +13,7 @@
 #include "fractol.h"
 
 /**
-** @name _end_mlx()
+** @name end_mlx()
 ** @brief this function is called at the very end of the program. His goal
 ** is to free all MiniLibX allocated memory and exit.
 **
@@ -21,7 +21,7 @@
 ** @param int err
 **/
 int
-	_end_mlx(t_data *data, int err)
+	end_mlx(t_data *data, int err)
 {
 	if (data->mlx.mlx)
 	{
@@ -29,8 +29,11 @@ int
 			mlx_destroy_window(data->mlx.mlx, data->mlx.win);
 		if (data->image.image)
 			mlx_destroy_image(data->mlx.mlx, data->image.image);
+		if (data->histogram)
+			free(data->histogram);
 		mlx_loop_end(data->mlx.mlx);
 		mlx_destroy_display(data->mlx.mlx);
+		free(data->mlx.mlx);
 	}
 	exit(err);
 }

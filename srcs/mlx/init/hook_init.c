@@ -12,11 +12,20 @@
 
 #include "fractol.h"
 
+static int
+	close_window(t_data *data)
+{
+	end_mlx(data, 0);
+	return (0);
+}
+
 void
 	setup_hook(t_data *data)
 {
 	mlx_hook(data->mlx.win, KeyPress, KeyPressMask, &keypress, data);
 	mlx_hook(data->mlx.win, ButtonPress, ButtonPressMask, &mouse, data);
-	mlx_hook(data->mlx.win, 6, (1L << 6), &julia_mouse_move, data);
-	mlx_hook(data->mlx.win, 33, (1L << 17), _end_mlx, data);
+	mlx_hook(data->mlx.win, MotionNotify, PointerMotionMask,
+		&julia_mouse_move, data);
+	mlx_hook(data->mlx.win, ClientMessage, StructureNotifyMask,
+		close_window, data);
 }

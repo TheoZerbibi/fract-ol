@@ -12,7 +12,7 @@
 
 #include "fractol.h"
 
-static int
+int
 	check_main_shapes(double cr, double ci)
 {
 	double		i2;
@@ -75,7 +75,7 @@ static double
 	if (state[0] == data->fractal.max_iterations)
 		return ((double)state[0]);
 	return (state[0] + 1
-		- fast_log2(fast_log2(sq[0] + sq[1]) * 0.5) * data->math.log_2);
+		- fast_log2(fast_log2(sq[0] + sq[1]) * 0.5));
 }
 
 double	is_mandelbrot(t_data *data, double cr, double ci)
@@ -95,6 +95,5 @@ void
 	data->fractal.color_shift = 1;
 	data->fractal.resolution_shift = 0;
 	data->fractal.max_iterations = MAX_ITER;
-	data->math.log_2 = 1.0 / log(2.0);
 	data->fractal.iterate = &is_mandelbrot;
 }

@@ -20,9 +20,10 @@ int
 
 	if (data->set != JULIA || data->fractal.julia_locked)
 		return (0);
-	cr = -2.0 + ((double)x / data->win_width) * 4.0;
-	ci = -2.0 + ((double)y / data->win_height) * 4.0;
+	cr = JULIA_MIN + ((double)x / data->win_width) * JULIA_RANGE;
+	ci = JULIA_MIN + ((double)y / data->win_height) * JULIA_RANGE;
 	data->fractal.julia_shiftx = cr;
 	data->fractal.julia_shifty = ci;
+	data->dirty = 1;
 	return (0);
 }

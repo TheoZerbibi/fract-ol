@@ -15,9 +15,6 @@
 
 # include <stdio.h>
 # include <math.h>
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <fcntl.h>
 # include <unistd.h>
 # include <stdlib.h>
 
@@ -31,9 +28,9 @@
 # include "keycodes.h"
 # include "define.h"
 
-int		_init_img(t_data *data);
-int		_init_mlx(t_data *data);
-int		_end_mlx(t_data *data, int err);
+int		init_img(t_data *data);
+int		init_mlx(t_data *data);
+int		end_mlx(t_data *data, int err);
 int		keypress(int keycode, t_data *datafractol);
 int		mouse(int keycode, int x, int y, t_data *data);
 int		julia_mouse_move(int x, int y, t_data *data);

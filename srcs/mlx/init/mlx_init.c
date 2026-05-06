@@ -22,7 +22,7 @@
 ** @return FALSE [0]
 **/
 int
-	_init_img(t_data *data)
+	init_img(t_data *data)
 {
 	data->image.image = mlx_new_image(data->mlx.mlx, data->win_width,
 			data->win_height);
@@ -38,7 +38,7 @@ int
 }
 
 /**
-** @name _init_mlx()
+** @name init_mlx()
 ** @brief Call by main function, this function init mlx lib
 ** and all dependencies
 **
@@ -47,7 +47,7 @@ int
 ** @return FALSE [0]
 **/
 int
-	_init_mlx(t_data *data)
+	init_mlx(t_data *data)
 {
 	data->mlx.mlx = mlx_init();
 	if (!data->mlx.mlx)

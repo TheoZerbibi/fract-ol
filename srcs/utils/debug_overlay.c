@@ -27,7 +27,7 @@ static int
 
 void
 	update_fps(t_data *data)
-		{
+{
 	struct timeval	now;
 	double			delta;
 

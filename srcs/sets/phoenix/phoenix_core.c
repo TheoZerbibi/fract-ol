@@ -18,7 +18,7 @@ static double
 	if (iter == data->fractal.max_iterations)
 		return ((double)iter);
 	return (iter + 1
-		- fast_log2(fast_log2(sq[0] + sq[1]) * 0.5) * data->math.log_2);
+		- fast_log2(fast_log2(sq[0] + sq[1]) * 0.5));
 }
 
 static void
@@ -72,6 +72,5 @@ void
 	data->fractal.max_iterations = MAX_ITER;
 	data->fractal.julia_shiftx = 0.5667;
 	data->fractal.phoenix_p = -0.5;
-	data->math.log_2 = 1.0 / log(2.0);
 	data->fractal.iterate = &phoenix_loop;
 }

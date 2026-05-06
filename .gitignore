@@ -32,6 +32,12 @@ mlx-test
 # Built Visual Studio Code Extensions
 *.vsix
 
+#CLion / CMake (IDE-only, not for compilation)
+CMakeLists.txt
+cmake-build-*/
+.idea/
+.clang-format
+
 #local test file
 ft_mallocator/
 test.*

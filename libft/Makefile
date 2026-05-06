@@ -52,6 +52,7 @@ SOURCES_STRING := \
 
 SOURCES_NUMBER := \
 	ft_atoi.c ft_swap.c ft_nbrlen.c ft_check_int_limit.c ft_atof.c \
+	ft_rand.c \
 
 SOURCES_MEMORY := \
 	ft_calloc.c ft_bzero.c ft_memccpy.c ft_memchr.c ft_memcmp.c \

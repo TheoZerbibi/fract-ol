@@ -15,10 +15,10 @@
 static double
 	get_zoom_factor(int keycode)
 {
-	if (keycode == 4)
-		return (0.9);
-	if (keycode == 5)
-		return (1.1);
+	if (keycode == MOUSE_SCROLL_UP)
+		return (ZOOM_IN);
+	if (keycode == MOUSE_SCROLL_DOWN)
+		return (ZOOM_OUT);
 	return (0.0);
 }
 
@@ -29,10 +29,10 @@ static int
 	double	step;
 
 	range = new_max_r - new_min_r;
-	if (range > INITIAL_ZOOM * 1.5)
+	if (range > INITIAL_ZOOM * MAX_ZOOM_MULT)
 		return (0);
 	step = range / (double)data->win_width;
-	if (step < 1e-13)
+	if (step < MIN_ZOOM_STEP)
 		return (0);
 	return (1);
 }
@@ -62,10 +62,10 @@ void
 	zoom = INITIAL_ZOOM / (data->math.max_r - data->math.min_r);
 	if (zoom < 1.0)
 		zoom = 1.0;
-	base = MAX_ITER / 6;
-	if (base < 50)
-		base = 50;
-	iters = base + (int)(log(zoom) / log(10.0) * (MAX_ITER - base));
+	base = MAX_ITER / ITER_BASE_DIV;
+	if (base < ITER_FLOOR)
+		base = ITER_FLOOR;
+	iters = base + (int)(log(zoom) / log(LOG_BASE) * (MAX_ITER - base));
 	if (iters < base)
 		iters = base;
 	if (iters > MAX_ITER)
@@ -94,5 +94,6 @@ int
 	data->math.min_i = pos[1] - (pos[1] - data->math.min_i) * zf;
 	data->math.max_i = pos[1] + (data->math.max_i - pos[1]) * zf;
 	update_adaptive_iter(data);
+	data->dirty = 1;
 	return (1);
 }

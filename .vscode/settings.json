@@ -1,12 +1,88 @@
 {
     "files.associations": {
-      "__config": "cpp",
-      "bitset": "c",
-      "format": "c",
-      "pthread.h": "c",
-      "bonus.h": "c",
-      "fractol.h": "c",
-      "stdio.h": "c",
-      "stat.h": "c"
-    }
+        "*.h": "c",
+        "pthread.h": "c",
+        "bonus.h": "c",
+        "fractol.h": "c",
+        "struct.h": "c",
+        "define.h": "c",
+        "colors.h": "c",
+        "keycodes.h": "c"
+    },
+
+    // ── LINE ENDINGS ─────────────────────────────────────────────────────────
+    // Norm target is Linux — always LF, never CRLF
+    "files.eol": "\n",
+
+    // ── INDENTATION: tabs, displayed as 4 spaces ──────────────────────────
+    // "Indentation: tabs (4-space width) — NOT spaces"
+    "editor.tabSize": 4,
+    "editor.insertSpaces": false,
+    "editor.detectIndentation": false,
+
+    // ── COLUMN LIMIT: 80 characters ──────────────────────────────────────────
+    // "Max 80 columns per line (tabs counted as their space width)"
+    "editor.rulers": [80],
+    "editor.wordWrapColumn": 80,
+    "editor.wordWrap": "off",
+
+    // ── TRAILING WHITESPACE ───────────────────────────────────────────────────
+    // "No trailing whitespace or tabs on any line"
+    // "Blank lines must be truly empty (no spaces/tabs)"
+    "files.trimTrailingWhitespace": true,
+    "editor.trimAutoWhitespace": true,
+
+    // ── NEWLINE AT END OF FILE ────────────────────────────────────────────────
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+
+    // ── WHITESPACE RENDERING: make norm violations visible ────────────────────
+    // Shows spaces vs tabs, trailing spaces, blank lines with spaces
+    "editor.renderWhitespace": "all",
+    "editor.renderControlCharacters": true,
+
+    // ── INDENT GUIDES ─────────────────────────────────────────────────────────
+    "editor.guides.indentation": true,
+    "editor.guides.highlightActiveIndentation": true,
+
+    // ── FUNCTION/FILE LENGTH HELPERS ──────────────────────────────────────────
+    // "Max 25 lines per function body" / "Max 5 function definitions per .c file"
+    // VSCode can't enforce these, but line count is visible in the status bar.
+    // Minimap and sticky scroll help navigate long files.
+    "editor.minimap.enabled": true,
+    "editor.minimap.showSlider": "always",
+    "editor.stickyScroll.enabled": true,
+
+    // ── FORMAT ON SAVE (clang-format) ────────────────────────────────────────
+    // Uses .clang-format file at project root for norm-aware formatting
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": false,
+    "editor.formatOnType": false,
+    "C_Cpp.formatting": "clangFormat",
+    "C_Cpp.clangFormat_fallbackStyle": "none",
+    "C_Cpp.clangFormat_style": "file",
+
+    // ── INTELLISENSE ──────────────────────────────────────────────────────────
+    "C_Cpp.default.cStandard": "c99",
+    "C_Cpp.errorSquiggles": "enabled",
+    "C_Cpp.autocomplete": "default",
+    "C_Cpp.suggestSnippets": false,
+
+    // ── PER-LANGUAGE OVERRIDES ────────────────────────────────────────────────
+    "[c]": {
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false,
+        "editor.detectIndentation": false,
+        "editor.rulers": [80],
+        "files.trimTrailingWhitespace": true,
+        "editor.formatOnSave": true
+    },
+    "[makefile]": {
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false,
+        "editor.detectIndentation": false
+    },
+
+    // ── GIT ───────────────────────────────────────────────────────────────────
+    "git.ignoreLimitWarning": true
 }

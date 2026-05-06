@@ -17,13 +17,13 @@ static void
 {
 	if (direction == 'U')
 	{
-		data->math.min_i -= 0.1 * height;
-		data->math.max_i -= 0.1 * height;
+		data->math.min_i -= MOVE_STEP * height;
+		data->math.max_i -= MOVE_STEP * height;
 	}
 	if (direction == 'D')
 	{
-		data->math.min_i += 0.1 * height;
-		data->math.max_i += 0.1 * height;
+		data->math.min_i += MOVE_STEP * height;
+		data->math.max_i += MOVE_STEP * height;
 	}
 }
 
@@ -39,13 +39,13 @@ static void
 	{
 		if (direction == 'U')
 		{
-			data->math.min_i += 0.1 * height;
-			data->math.max_i += 0.1 * height;
+			data->math.min_i += MOVE_STEP * height;
+			data->math.max_i += MOVE_STEP * height;
 		}
 		if (direction == 'D')
 		{
-			data->math.min_i -= 0.1 * height;
-			data->math.max_i -= 0.1 * height;
+			data->math.min_i -= MOVE_STEP * height;
+			data->math.max_i -= MOVE_STEP * height;
 		}
 	}
 }
@@ -58,13 +58,13 @@ static void
 	width = data->math.max_r - data->math.min_r;
 	if (direction == 'R')
 	{
-		data->math.min_r += 0.1 * width;
-		data->math.max_r += 0.1 * width;
+		data->math.min_r += MOVE_STEP * width;
+		data->math.max_r += MOVE_STEP * width;
 	}
 	if (direction == 'L')
 	{
-		data->math.min_r -= 0.1 * width;
-		data->math.max_r -= 0.1 * width;
+		data->math.min_r -= MOVE_STEP * width;
+		data->math.max_r -= MOVE_STEP * width;
 	}
 }
 
@@ -75,13 +75,14 @@ static void
 		move_vertical(data, direction);
 	else
 		move_horizontal(data, direction);
+	data->dirty = 1;
 }
 
 int
 	keypress(int keycode, t_data *data)
 {
 	if (keycode == K_ESC)
-		_end_mlx(data, 0);
+		end_mlx(data, 0);
 	if (keycode == K_SPACE)
 		data->fractal.julia_locked = !data->fractal.julia_locked;
 	if (keycode == K_CTRL)

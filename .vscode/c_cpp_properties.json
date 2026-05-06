@@ -1,0 +1,38 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/privates",
+                "${workspaceFolder}/minilibx-linux",
+                "${workspaceFolder}/libft/includes"
+            ],
+            "defines": [
+                "_GNU_SOURCE"
+            ],
+            "compilerPath": "/usr/bin/cc",
+            "cStandard": "c99",
+            "intelliSenseMode": "linux-gcc-x64"
+        },
+        {
+            "name": "Linux-Bonus",
+            "includePath": [
+                "${workspaceFolder}/privates",
+                "${workspaceFolder}/minilibx-linux",
+                "${workspaceFolder}/libft/includes"
+            ],
+            "defines": [
+                "_GNU_SOURCE",
+                "BONUS"
+            ],
+            "compilerPath": "/usr/bin/cc",
+            "cStandard": "c99",
+            "intelliSenseMode": "linux-gcc-x64",
+            "compilerArgs": [
+                "-pthread",
+                "-mavx2"
+            ]
+        }
+    ],
+    "version": 4
+}

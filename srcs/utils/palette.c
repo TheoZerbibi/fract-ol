@@ -70,12 +70,10 @@ int
 		pal = get_p2(&size);
 	else
 		pal = get_p3(&size);
-	scaled = (iteration / (double)data->fractal.max_iterations) * (size - 1);
-	if (scaled > size - 1)
-		scaled = size - 1;
+	scaled = fmod(sqrt(iteration) * 2.5, (double)size);
 	idx = (int)scaled;
 	if (idx >= size - 1)
-		c = interpolate(pal[idx + size - 2], pal[idx + 1], 1.0);
+		c = pal[size - 1];
 	else
 		c = interpolate(pal[idx], pal[idx + 1], scaled - idx);
 	return (create_trgb(0, clamp_color(c.r),
@@ -88,4 +86,5 @@ void
 	data->fractal.color_shift++;
 	if (data->fractal.color_shift > NUM_PALETTES)
 		data->fractal.color_shift = 1;
+	data->dirty = 1;
 }

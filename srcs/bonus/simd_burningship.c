@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   simd_mandelbrot.c                                  :+:      :+:    :+:   */
+/*   simd_burningship.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -13,8 +13,8 @@
 #include "bonus.h"
 
 static inline void
-	mandelbrot_simd_loop(__m256d cr, __m256d ci, __m256i *iters,
-	int max_iter)
+	ship_simd_loop(t_data *d, __m256d cr, __m256d ci,
+	__m256i *iters)
 {
 	__m256d	zr;
 	__m256d	zi;
@@ -28,10 +28,14 @@ static inline void
 	zr2 = _mm256_setzero_pd();
 	zi2 = _mm256_setzero_pd();
 	i = 0;
-	while (i < max_iter)
+	while (i < d->fractal.max_iterations)
 	{
-		zi = _mm256_add_pd(
-				_mm256_mul_pd(_mm256_mul_pd(_mm256_set1_pd(2.0), zr), zi), ci);
+		zr = _mm256_and_pd(zr,
+				_mm256_castsi256_pd(_mm256_set1_epi64x(0x7FFFFFFFFFFFFFFF)));
+		zi = _mm256_and_pd(zi,
+				_mm256_castsi256_pd(_mm256_set1_epi64x(0x7FFFFFFFFFFFFFFF)));
+		zi = _mm256_add_pd(_mm256_mul_pd(
+					_mm256_mul_pd(_mm256_set1_pd(2.0), zr), zi), ci);
 		zr = _mm256_add_pd(_mm256_sub_pd(zr2, zi2), cr);
 		zr2 = _mm256_mul_pd(zr, zr);
 		zi2 = _mm256_mul_pd(zi, zi);
@@ -46,59 +50,12 @@ static inline void
 	}
 }
 
-static void
-	exec_simd(double *crs, double ci, long long int *it,
-	int max_iter)
-{
-	__m256i	v_iters;
-
-	v_iters = _mm256_setzero_si256();
-	mandelbrot_simd_loop(
-		_mm256_set_pd(crs[3], crs[2], crs[1], crs[0]),
-		_mm256_set1_pd(ci), &v_iters, max_iter);
-	_mm256_storeu_si256((__m256i *)it, v_iters);
-}
-
-static void
-	write_4px(t_thread_data *info, int x, int y, long long int *it)
-{
-	unsigned int	*row;
-	int				i;
-	int				max;
-
-	row = (unsigned int *)(info->data->image.addr
-			+ y * info->data->image.size_line);
-	max = info->data->fractal.max_iterations;
-	i = 0;
-	while (i < 4)
-	{
-		if (it[i] >= max)
-			row[x + i] = 0;
-		else
-			row[x + i] = make_color(info->data, (double)it[i]);
-		i++;
-	}
-}
-
-static void
-	fix_cardioid(int *s, long long int *it, int max_iter)
-{
-	if (s[0])
-		it[0] = max_iter;
-	if (s[1])
-		it[1] = max_iter;
-	if (s[2])
-		it[2] = max_iter;
-	if (s[3])
-		it[3] = max_iter;
-}
-
 void
-	simd_mandelbrot(t_thread_data *info, int y, double ci)
+	simd_burningship(t_thread_data *info, int y, double ci)
 {
-	long long int	it[4];
+	long long int	iters[4];
 	double			crs[4];
-	int				s[4];
+	__m256i			v_iters;
 	int				x;
 
 	x = 0;
@@ -108,19 +65,15 @@ void
 		crs[1] = crs[0] + info->step_r;
 		crs[2] = crs[1] + info->step_r;
 		crs[3] = crs[2] + info->step_r;
-		s[0] = check_main_shapes(crs[0], ci);
-		s[1] = check_main_shapes(crs[1], ci);
-		s[2] = check_main_shapes(crs[2], ci);
-		s[3] = check_main_shapes(crs[3], ci);
-		if (s[0] + s[1] + s[2] + s[3] == 4)
-			fix_cardioid(s, it, info->data->fractal.max_iterations);
-		else
-		{
-			exec_simd(crs, ci, it,
-				info->data->fractal.max_iterations);
-			fix_cardioid(s, it, info->data->fractal.max_iterations);
-		}
-		write_4px(info, x, y, it);
+		v_iters = _mm256_setzero_si256();
+		ship_simd_loop(info->data,
+			_mm256_set_pd(crs[3], crs[2], crs[1], crs[0]),
+			_mm256_set1_pd(ci), &v_iters);
+		_mm256_storeu_si256((__m256i *)iters, v_iters);
+		put_pixel_simd(info, x, y, iters[0]);
+		put_pixel_simd(info, x + 1, y, iters[1]);
+		put_pixel_simd(info, x + 2, y, iters[2]);
+		put_pixel_simd(info, x + 3, y, iters[3]);
 		x += 4;
 	}
 	render_thread_row_remainder(info, y, ci, x);

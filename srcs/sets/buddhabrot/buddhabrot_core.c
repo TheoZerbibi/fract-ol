@@ -86,7 +86,6 @@ void
 	data->fractal.color_shift = 4;
 	data->fractal.resolution_shift = 0;
 	data->fractal.max_iterations = MAX_ITER;
-	data->math.log_2 = 1.0 / log(2.0);
 	data->fractal.iterate = NULL;
 	total = data->win_width * data->win_height;
 	data->histogram = (unsigned int *)malloc(sizeof(unsigned int) * total);
@@ -108,9 +107,9 @@ void
 	while (i < num_samples)
 	{
 		cr = data->math.min_r + (data->math.max_r - data->math.min_r)
-			* ((double)(rand() % 10000) / 10000.0);
+			* ((double)(ft_rand() % 10000) / 10000.0);
 		ci = data->math.min_i + (data->math.max_i - data->math.min_i)
-			* ((double)(rand() % 10000) / 10000.0);
+			* ((double)(ft_rand() % 10000) / 10000.0);
 		if (escapes(cr, ci, data->fractal.max_iterations))
 			trace_orbit(data, cr, ci);
 		i++;

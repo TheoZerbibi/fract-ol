@@ -18,11 +18,13 @@
 # include <stdio.h>
 # include <string.h>
 # include <execinfo.h>
+# include <sys/time.h>
 
 # define TRUE 1
 # define FALSE 0
 # define INT_MAX 2147483647
 # define INT_MIN -2147483648
+# define FT_RAND_MAX 0x7FFFFFFF
 # ifndef END_LINE
 #  define END_LINE '\n'
 # endif
@@ -46,6 +48,7 @@ int				ft_isspace(int c);
 int				ft_atoi(const char *str);
 double			ft_atof(const char *str);
 long			ft_atol(const char *str);
+int				ft_rand(void);
 void			ft_bzero(void *s, size_t n);
 int				ft_check_int_limit(const char *str);
 char			*ft_strnew(size_t len);

@@ -12,15 +12,12 @@
 
 #ifndef BONUS_H
 # define BONUS_H
-# define _GNU_SOURCE
 
 # include "fractol.h"
 
 # include <immintrin.h>
-# include <math.h>
 # include <pthread.h>
 # include <sched.h>
-# include <stdlib.h>
 
 # define MAX_THREADS	128
 

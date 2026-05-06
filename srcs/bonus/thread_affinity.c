@@ -49,3 +49,30 @@ void
 		i++;
 	}
 }
+
+int
+	launch_threads(pthread_t *thr, t_thread_data *info, int n)
+{
+	int	i;
+
+	i = 0;
+	while (i < n)
+	{
+		info[i].thread_id = i;
+		if (pthread_create(&thr[i], NULL, thread_render_generic,
+				&info[i]) != 0)
+		{
+			while (--i >= 0)
+				pthread_join(thr[i], NULL);
+			return (FALSE);
+		}
+		i++;
+	}
+	i = 0;
+	while (i < n)
+	{
+		pthread_join(thr[i], NULL);
+		i++;
+	}
+	return (TRUE);
+}

@@ -18,16 +18,22 @@
 # include <sys/wait.h>
 # include <sys/time.h>
 # include "define.h"
-# include "colors.h"
 
 typedef struct s_mlx		t_mlx;
 typedef struct s_data		t_data;
 typedef struct s_img		t_img;
-typedef struct s_color		t_color;
 typedef struct s_fractal	t_fractal;
 typedef struct s_math		t_math;
 typedef struct s_perf		t_perf;
 typedef union u_bit_hack	t_bit_hack;
+typedef struct s_color		t_color;
+
+struct s_color
+{
+	int	r;
+	int	g;
+	int	b;
+};
 
 union u_bit_hack
 {
@@ -68,7 +74,6 @@ typedef struct s_math
 	unsigned int	count;
 	double			center_i;
 	double			center_r;
-	double			log_2;
 }	t_math;
 
 typedef struct s_fractal
@@ -89,6 +94,7 @@ typedef struct s_data
 	int					win_width;
 	int					win_height;
 	int					show_usage;
+	int					dirty;
 	enum e_fractal_set	set;
 	t_mlx				mlx;
 	t_img				image;

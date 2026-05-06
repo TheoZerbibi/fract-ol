@@ -17,7 +17,7 @@ void
 {
 	ft_putstr("\e[1;31mError\n\e[0m\n");
 	ft_putstr("\e[1;31mA problem occurred during initialisation!\e[0m\n");
-	_end_mlx(data, 1);
+	end_mlx(data, 1);
 }
 
 static void
@@ -39,5 +39,5 @@ void
 	ft_putstr("\n\t\e[0;36mCorrect usage is\t: ");
 	ft_putstr("\e[0;92m./fractol <FractalSet>\e[0m\n");
 	print_usage_sets();
-	_end_mlx(data, 1);
+	end_mlx(data, 1);
 }
