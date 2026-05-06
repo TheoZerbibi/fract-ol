@@ -17,6 +17,7 @@ void
 {
 	unsigned int	*row;
 
+	it++;
 	row = (unsigned int *)(info->data->image.addr
 			+ y * info->data->image.size_line);
 	if (it >= info->data->fractal.max_iterations)
@@ -44,5 +45,27 @@ void
 		else
 			row[x] = make_color(info->data, it);
 		x++;
+	}
+}
+
+void
+	write_4px(t_thread_data *info, int x, int y, long long int *it)
+{
+	unsigned int	*row;
+	int				i;
+	int				max;
+
+	row = (unsigned int *)(info->data->image.addr
+			+ y * info->data->image.size_line);
+	max = info->data->fractal.max_iterations;
+	i = 0;
+	while (i < 4)
+	{
+		it[i]++;
+		if (it[i] >= max)
+			row[x + i] = 0;
+		else
+			row[x + i] = make_color(info->data, (double)it[i]);
+		i++;
 	}
 }

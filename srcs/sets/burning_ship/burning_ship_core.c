@@ -27,6 +27,19 @@ static int
 	return (0);
 }
 
+static void
+	ship_step(double *zr, double *zi, double *sq, double *c)
+{
+	if (*zr < 0.0)
+		*zr = -*zr;
+	if (*zi < 0.0)
+		*zi = -*zi;
+	*zi = 2.0 * (*zr) * (*zi) + c[1];
+	*zr = sq[0] - sq[1] + c[0];
+	sq[0] = (*zr) * (*zr);
+	sq[1] = (*zi) * (*zi);
+}
+
 static double
 	ship_loop(t_data *data, double cr, double ci)
 {
@@ -38,22 +51,12 @@ static double
 
 	zr = 0.0;
 	zi = 0.0;
-	sq[0] = 0.0;
-	sq[1] = 0.0;
-	old[0] = 0.0;
-	old[1] = 0.0;
-	state[0] = 0;
-	state[1] = 0;
+	ft_memset(sq, 0, sizeof(sq));
+	ft_memset(old, 0, sizeof(old));
+	ft_memset(state, 0, sizeof(state));
 	while (sq[0] + sq[1] <= 4.0 && state[0] < data->fractal.max_iterations)
 	{
-		if (zr < 0.0)
-			zr = -zr;
-		if (zi < 0.0)
-			zi = -zi;
-		zi = 2.0 * zr * zi + ci;
-		zr = sq[0] - sq[1] + cr;
-		sq[0] = zr * zr;
-		sq[1] = zi * zi;
+		ship_step(&zr, &zi, sq, (double [2]){cr, ci});
 		state[0]++;
 		if (check_period(zr, zi, old, &state[1]))
 			return ((double)data->fractal.max_iterations);

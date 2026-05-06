@@ -29,6 +29,15 @@ t_color
 	return (result);
 }
 
+/**
+ * @brief    Pack TRGB channels into a single 32-bit integer.
+ *
+ * @param    t   Transparency (alpha) channel (0 = opaque).
+ * @param    r   Red channel (0-255).
+ * @param    g   Green channel (0-255).
+ * @param    b   Blue channel (0-255).
+ * @return   32-bit TRGB color value.
+ */
 int
 	create_trgb(int t, int r, int g, int b)
 {

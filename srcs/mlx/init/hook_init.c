@@ -19,6 +19,14 @@ static int
 	return (0);
 }
 
+/**
+ * @brief    Register X11 event hooks with MiniLibX.
+ *
+ * @param    data   Application state.
+ * @note     Uses X11 event masks: KeyPressMask for keyboard, ButtonPressMask
+ *           for mouse clicks/scrolls, PointerMotionMask for mouse tracking,
+ *           and StructureNotifyMask for window close events (ClientMessage).
+ */
 void
 	setup_hook(t_data *data)
 {

@@ -13,13 +13,15 @@
 #include "fractol.h"
 
 /**
-** @name end_mlx()
-** @brief this function is called at the very end of the program. His goal
-** is to free all MiniLibX allocated memory and exit.
-**
-** @param t_data *data
-** @param int err
-**/
+ * @brief    Clean up MiniLibX resources and exit.
+ *
+ * Safely destroys the window, image, and display connection in the
+ * required order to prevent memory leaks or double-frees.
+ *
+ * @param    data   Application state.
+ * @param    err    Exit code to return to the OS.
+ * @return   Never returns (calls exit).
+ */
 int
 	end_mlx(t_data *data, int err)
 {

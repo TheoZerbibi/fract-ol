@@ -1,0 +1,15 @@
+PROJECT_NAME           = "fract'ol"
+PROJECT_BRIEF          = "Interactive fractal explorer — 42 School project"
+OUTPUT_DIRECTORY       = docs/
+INPUT                  = srcs/ privates/
+RECURSIVE              = YES
+EXCLUDE                = minilibx-linux/ libft/
+FILE_PATTERNS          = *.c *.h *.dox
+EXTRACT_ALL            = YES
+GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
+HTML_OUTPUT            = html
+HAVE_DOT               = NO
+QUIET                  = YES
+WARNINGS               = YES
+OPTIMIZE_OUTPUT_FOR_C  = YES

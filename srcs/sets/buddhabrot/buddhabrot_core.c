@@ -22,8 +22,7 @@ static int
 
 	zr = 0.0;
 	zi = 0.0;
-	sq[0] = 0.0;
-	sq[1] = 0.0;
+	ft_memset(sq, 0, sizeof(sq));
 	i = 0;
 	while (sq[0] + sq[1] <= 4.0 && i < max_iter)
 	{
@@ -60,8 +59,7 @@ static void
 
 	zr = 0.0;
 	zi = 0.0;
-	sq[0] = 0.0;
-	sq[1] = 0.0;
+	ft_memset(sq, 0, sizeof(sq));
 	i = 0;
 	while (sq[0] + sq[1] <= 4.0 && i < data->fractal.max_iterations)
 	{
@@ -79,21 +77,20 @@ void
 {
 	int	total;
 
-	data->math.min_r = -2.0;
-	data->math.max_r = 1.0;
-	data->math.min_i = -1.5;
-	data->math.max_i = 1.5;
+	data->math.min_r = BUDDHA_MIN_R;
+	data->math.max_r = BUDDHA_MAX_R;
+	data->math.min_i = BUDDHA_MIN_I;
+	data->math.max_i = BUDDHA_MAX_I;
 	data->fractal.color_shift = 4;
 	data->fractal.resolution_shift = 0;
-	data->fractal.max_iterations = MAX_ITER;
+	data->fractal.max_iterations = BUDDHA_ITER;
 	data->fractal.iterate = NULL;
 	total = data->win_width * data->win_height;
 	data->histogram = (unsigned int *)malloc(sizeof(unsigned int) * total);
 	if (!data->histogram)
 		return ;
 	data->hist_max = 0;
-	while (--total >= 0)
-		data->histogram[total] = 0;
+	ft_memset(data->histogram, 0, sizeof(unsigned int) * total);
 }
 
 void
@@ -106,10 +103,10 @@ void
 	i = 0;
 	while (i < num_samples)
 	{
-		cr = data->math.min_r + (data->math.max_r - data->math.min_r)
-			* ((double)(ft_rand() % 10000) / 10000.0);
-		ci = data->math.min_i + (data->math.max_i - data->math.min_i)
-			* ((double)(ft_rand() % 10000) / 10000.0);
+		cr = BUDDHA_MIN_R + BUDDHA_RANGE_R
+			* ((double)(ft_rand() % BUDDHA_RAND_RES) / BUDDHA_RAND_RES);
+		ci = BUDDHA_MIN_I + BUDDHA_RANGE_I
+			* ((double)(ft_rand() % BUDDHA_RAND_RES) / BUDDHA_RAND_RES);
 		if (escapes(cr, ci, data->fractal.max_iterations))
 			trace_orbit(data, cr, ci);
 		i++;

@@ -12,6 +12,14 @@
 
 #include "fractol.h"
 
+/**
+ * @brief    Parse complex parameters for the Julia set.
+ *
+ * @param    argc   Argument count.
+ * @param    argv   Argument vector.
+ * @param    data   Application state to store parsed values.
+ * @return   TRUE on success.
+ */
 static int
 	parse_julia_args(int argc, char **argv, t_data *data)
 {
@@ -26,6 +34,16 @@ static int
 	return (TRUE);
 }
 
+/**
+ * @brief    Main rendering loop callback for MiniLibX.
+ *
+ * Called continuously by mlx_loop. Updates FPS, and if the dirty flag
+ * is set, dispatches the draw routine for the active fractal and clears
+ * the flag. Overlays (usage, debug) are drawn afterwards.
+ *
+ * @param    data   Application state.
+ * @return   0 on success.
+ */
 int
 	draw_fractol(t_data *data)
 {
@@ -47,6 +65,16 @@ int
 	return (0);
 }
 
+/**
+ * @brief    Application entry point.
+ *
+ * Initializes state, parses arguments, sets up the MiniLibX window and
+ * image buffer, registers event hooks, and enters the main loop.
+ *
+ * @param    argc   Argument count.
+ * @param    argv   Argument vector.
+ * @return   0 on clean exit.
+ */
 int
 	main(int argc, char *argv[])
 {

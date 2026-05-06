@@ -13,7 +13,7 @@
 #include "fractol.h"
 
 static int
-	write_whole(char *dst, int w, int i)
+	write_whole(char *dst, long long w, int i)
 {
 	if (w == 0)
 		dst[i--] = '0';
@@ -61,17 +61,17 @@ void
 void
 	fmt_double(char *dst, double val, int size)
 {
-	double	abs_val;
-	int		w;
-	int		f;
-	int		i;
+	double		abs_val;
+	long long	w;
+	int			f;
+	int			i;
 
 	if (val < 0)
 		abs_val = -val;
 	else
 		abs_val = val;
-	w = (int)abs_val;
-	f = (int)((abs_val - w) * 100);
+	w = (long long)abs_val;
+	f = (int)((abs_val - (double)w) * 100);
 	i = size;
 	dst[i--] = '\0';
 	while (i >= 0)

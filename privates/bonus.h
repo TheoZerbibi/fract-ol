@@ -46,6 +46,7 @@ int		buddhabrot_bonus(t_data *data);
 int		phoenix_bonus(t_data *data);
 
 void	put_pixel_simd(t_thread_data *info, int x, int y, long long it);
+void	write_4px(t_thread_data *info, int x, int y, long long int *it);
 void	render_thread_row_remainder(t_thread_data *info,
 			int y, double ci, int x);
 void	simd_mandelbrot(t_thread_data *info, int y, double ci);

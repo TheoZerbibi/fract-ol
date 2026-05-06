@@ -3,49 +3,61 @@
 /*                                                        :::      ::::::::   */
 /*   simd_burningship.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: theo <theo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 14:00:00 by thzeribi          #+#    #+#             */
-/*   Updated: 2026/02/20 14:00:00 by thzeribi         ###   ########.fr       */
+/*   Updated: 2026/05/06 09:27:32 by theo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bonus.h"
 
 static inline void
+	ship_simd_init(__m256d *z)
+{
+	z[0] = _mm256_setzero_pd();
+	z[1] = _mm256_setzero_pd();
+	z[2] = _mm256_setzero_pd();
+	z[3] = _mm256_setzero_pd();
+}
+
+static inline int
+	ship_simd_step(__m256d *z, __m256d cr, __m256d ci, __m256i *iters)
+{
+	__m256d	mask;
+
+	z[0] = _mm256_and_pd(z[0],
+			_mm256_castsi256_pd(_mm256_set1_epi64x(0x7FFFFFFFFFFFFFFF)));
+	z[1] = _mm256_and_pd(z[1],
+			_mm256_castsi256_pd(_mm256_set1_epi64x(0x7FFFFFFFFFFFFFFF)));
+	z[1] = _mm256_add_pd(_mm256_mul_pd(
+				_mm256_mul_pd(_mm256_set1_pd(2.0), z[0]), z[1]), ci);
+	z[0] = _mm256_add_pd(_mm256_sub_pd(z[2], z[3]), cr);
+	z[2] = _mm256_mul_pd(z[0], z[0]);
+	z[3] = _mm256_mul_pd(z[1], z[1]);
+	mask = _mm256_cmp_pd(_mm256_add_pd(z[2], z[3]),
+			_mm256_set1_pd(4.0), _CMP_LT_OQ);
+	if (_mm256_movemask_pd(mask) == 0)
+		return (0);
+	*iters = _mm256_add_epi64(*iters,
+			_mm256_and_si256(_mm256_castpd_si256(mask),
+				_mm256_set1_epi64x(1)));
+	return (1);
+}
+
+static inline void
 	ship_simd_loop(t_data *d, __m256d cr, __m256d ci,
 	__m256i *iters)
 {
-	__m256d	zr;
-	__m256d	zi;
-	__m256d	zr2;
-	__m256d	zi2;
-	__m256d	mask;
+	__m256d	z[4];
 	int		i;
 
-	zr = _mm256_setzero_pd();
-	zi = _mm256_setzero_pd();
-	zr2 = _mm256_setzero_pd();
-	zi2 = _mm256_setzero_pd();
+	ship_simd_init(z);
 	i = 0;
 	while (i < d->fractal.max_iterations)
 	{
-		zr = _mm256_and_pd(zr,
-				_mm256_castsi256_pd(_mm256_set1_epi64x(0x7FFFFFFFFFFFFFFF)));
-		zi = _mm256_and_pd(zi,
-				_mm256_castsi256_pd(_mm256_set1_epi64x(0x7FFFFFFFFFFFFFFF)));
-		zi = _mm256_add_pd(_mm256_mul_pd(
-					_mm256_mul_pd(_mm256_set1_pd(2.0), zr), zi), ci);
-		zr = _mm256_add_pd(_mm256_sub_pd(zr2, zi2), cr);
-		zr2 = _mm256_mul_pd(zr, zr);
-		zi2 = _mm256_mul_pd(zi, zi);
-		mask = _mm256_cmp_pd(_mm256_add_pd(zr2, zi2),
-				_mm256_set1_pd(4.0), _CMP_LT_OQ);
-		if (_mm256_movemask_pd(mask) == 0)
+		if (!ship_simd_step(z, cr, ci, iters))
 			break ;
-		*iters = _mm256_add_epi64(*iters,
-				_mm256_and_si256(_mm256_castpd_si256(mask),
-				_mm256_set1_epi64x(1)));
 		i++;
 	}
 }

@@ -78,6 +78,15 @@ static void
 	data->dirty = 1;
 }
 
+/**
+ * @brief    Keyboard event handler.
+ *
+ * @param    keycode   X11 key code of the pressed key.
+ * @param    data      Application state.
+ * @return   The processed keycode.
+ * @note     Handles movement, color cycling, usage overlays, and exit.
+ *           Triggers an adaptive iteration update if zoom-affecting.
+ */
 int
 	keypress(int keycode, t_data *data)
 {

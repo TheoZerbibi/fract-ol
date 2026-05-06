@@ -12,6 +12,18 @@
 
 #include "fractol.h"
 
+/**
+ * @brief    Fast cardioid and period-2 bulb test.
+ *
+ * Analytically detects whether a point lies inside the main cardioid or
+ * the period-2 bulb of the Mandelbrot set, avoiding expensive iteration.
+ *
+ * @param    cr   Real part of the test point.
+ * @param    ci   Imaginary part of the test point.
+ * @return   1 if the point is inside a known region, 0 otherwise.
+ * @note   Cardioid: q(q + (cr-0.25)) <= 0.25*ci^2 where q = (cr-0.25)^2 + ci^2.
+ *         Period-2 bulb: (cr+1)^2 + ci^2 <= 1/16.
+ */
 int
 	check_main_shapes(double cr, double ci)
 {
@@ -45,6 +57,20 @@ static int
 	return (0);
 }
 
+/**
+ * @brief    Mandelbrot escape-time iteration with smooth coloring.
+ *
+ * Iterates z_{n+1} = z_n^2 + c starting from z_0 = 0 until escape
+ * (|z|^2 > 4) or max_iterations is reached. Returns a smooth iteration
+ * count using the normalized iteration count algorithm.
+ *
+ * @param    data   Application state (provides max_iterations).
+ * @param    cr     Real part of c (pixel coordinate).
+ * @param    ci     Imaginary part of c (pixel coordinate).
+ * @return   Smooth fractional iteration count, or max_iterations if bounded.
+ * @note     Formula: iter + 1 - log2(log2(|z|^2) / 2).
+ *           Uses period checking to detect orbital cycles early.
+ */
 static double
 	mandelbrot_loop(t_data *data, double cr, double ci)
 {
@@ -56,12 +82,9 @@ static double
 
 	zr = 0.0;
 	zi = 0.0;
-	sq[0] = 0.0;
-	sq[1] = 0.0;
-	old[0] = 0.0;
-	old[1] = 0.0;
-	state[0] = 0;
-	state[1] = 0;
+	ft_memset(sq, 0, sizeof(sq));
+	ft_memset(old, 0, sizeof(old));
+	ft_memset(state, 0, sizeof(state));
 	while (sq[0] + sq[1] <= 4.0 && state[0] < data->fractal.max_iterations)
 	{
 		zi = 2.0 * zr * zi + ci;
@@ -78,6 +101,16 @@ static double
 		- fast_log2(fast_log2(sq[0] + sq[1]) * 0.5));
 }
 
+/**
+ * @brief    Public Mandelbrot iteration entry point.
+ *
+ * Combines the cardioid/bulb fast-path with the full iteration loop.
+ *
+ * @param    data   Application state.
+ * @param    cr     Real part of c.
+ * @param    ci     Imaginary part of c.
+ * @return   Smooth iteration count (max_iterations if inside the set).
+ */
 double	is_mandelbrot(t_data *data, double cr, double ci)
 {
 	if (check_main_shapes(cr, ci))

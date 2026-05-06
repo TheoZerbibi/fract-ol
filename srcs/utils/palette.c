@@ -28,32 +28,39 @@ static t_color
 static t_color
 	*get_p2(int *size)
 {
-	static t_color	p2[7] = {{148, 0, 211}, {75, 0, 130}, {0, 0, 255},
-	{0, 255, 0}, {255, 255, 0}, {255, 127, 0}, {255, 0, 0}};
+	static t_color	p2[10] = {
+	{20, 0, 60}, {60, 10, 130}, {30, 60, 200}, {0, 150, 220},
+	{20, 220, 160}, {100, 240, 80}, {220, 220, 40}, {255, 140, 30},
+	{230, 50, 80}, {140, 20, 140}};
 
-	*size = 7;
+	*size = 10;
 	return (p2);
 }
 
 static t_color
 	*get_p3(int *size)
 {
-	static t_color	p3[37] = {
-	{7, 7, 7}, {31, 7, 7}, {47, 15, 7}, {71, 15, 7},
-	{87, 23, 7}, {103, 31, 7}, {119, 31, 7}, {143, 39, 7},
-	{159, 47, 7}, {175, 63, 7}, {191, 71, 7}, {199, 71, 7},
-	{223, 79, 7}, {223, 87, 7}, {223, 87, 7}, {215, 95, 7},
-	{215, 95, 7}, {215, 103, 15}, {207, 111, 15}, {207, 119, 15},
-	{207, 127, 15}, {207, 135, 23}, {199, 135, 23}, {199, 143, 23},
-	{199, 151, 31}, {191, 159, 31}, {191, 159, 31}, {191, 167, 39},
-	{191, 167, 39}, {191, 175, 47}, {183, 175, 47}, {183, 183, 47},
-	{183, 183, 55}, {207, 207, 111}, {223, 223, 159}, {239, 239, 199},
-	{255, 255, 255}};
+	static t_color	p3[12] = {
+	{5, 0, 0}, {40, 2, 0}, {90, 10, 0}, {150, 25, 0},
+	{200, 50, 5}, {235, 90, 10}, {255, 140, 15}, {255, 190, 40},
+	{255, 220, 90}, {255, 240, 160}, {255, 250, 220}, {255, 255, 255}};
 
-	*size = 37;
+	*size = 12;
 	return (p3);
 }
 
+/**
+ * @brief    Map an escape-time iteration count to an RGB color.
+ *
+ * Selects the active palette, scales the iteration value using
+ * sqrt for perceptual uniformity, and interpolates between adjacent
+ * palette entries for smooth gradients.
+ *
+ * @param    data       Application state (provides active palette index).
+ * @param    iteration  Smooth fractional iteration count.
+ * @return   32-bit TRGB color value.
+ * @note     Scaling: fmod(sqrt(iteration) * 2.5, palette_size).
+ */
 int
 	make_color(t_data *data, double iteration)
 {

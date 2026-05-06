@@ -1,49 +1,52 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   simd_other.c                                       :+:      :+:    :+:   */
+/*   simd_julia.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thzeribi <thzeribi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: theo <theo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 14:00:00 by thzeribi          #+#    #+#             */
-/*   Updated: 2026/02/20 14:00:00 by thzeribi         ###   ########.fr       */
+/*   Updated: 2026/05/06 09:17:56 by theo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bonus.h"
 
 static inline void
+	julia_simd_init(__m256d *z, __m256d cr, __m256d ci)
+{
+	z[0] = cr;
+	z[1] = ci;
+	z[2] = _mm256_mul_pd(cr, cr);
+	z[3] = _mm256_mul_pd(ci, ci);
+}
+
+static inline void
 	julia_simd_loop(t_data *d, __m256d cr, __m256d ci,
 	__m256i *iters)
 {
-	__m256d	zr;
-	__m256d	zi;
-	__m256d	zr2;
-	__m256d	zi2;
+	__m256d	z[4];
 	__m256d	mask;
 	int		i;
 
-	zr = cr;
-	zi = ci;
-	zr2 = _mm256_mul_pd(zr, zr);
-	zi2 = _mm256_mul_pd(zi, zi);
+	julia_simd_init(z, cr, ci);
 	i = 0;
 	while (i < d->fractal.max_iterations)
 	{
-		zi = _mm256_add_pd(_mm256_mul_pd(
-					_mm256_mul_pd(_mm256_set1_pd(2.0), zr), zi),
+		z[1] = _mm256_add_pd(_mm256_mul_pd(
+					_mm256_mul_pd(_mm256_set1_pd(2.0), z[0]), z[1]),
 				_mm256_set1_pd(d->fractal.julia_shifty));
-		zr = _mm256_add_pd(_mm256_sub_pd(zr2, zi2),
+		z[0] = _mm256_add_pd(_mm256_sub_pd(z[2], z[3]),
 				_mm256_set1_pd(d->fractal.julia_shiftx));
-		zr2 = _mm256_mul_pd(zr, zr);
-		zi2 = _mm256_mul_pd(zi, zi);
-		mask = _mm256_cmp_pd(_mm256_add_pd(zr2, zi2),
+		z[2] = _mm256_mul_pd(z[0], z[0]);
+		z[3] = _mm256_mul_pd(z[1], z[1]);
+		mask = _mm256_cmp_pd(_mm256_add_pd(z[2], z[3]),
 				_mm256_set1_pd(4.0), _CMP_LT_OQ);
 		if (_mm256_movemask_pd(mask) == 0)
 			break ;
 		*iters = _mm256_add_epi64(*iters,
 				_mm256_and_si256(_mm256_castpd_si256(mask),
-				_mm256_set1_epi64x(1)));
+					_mm256_set1_epi64x(1)));
 		i++;
 	}
 }

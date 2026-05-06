@@ -44,3 +44,6 @@ test.*
 *.DBG.*
 *.BNS.*
 .nfs*
+
+# Doxygen
+docs/

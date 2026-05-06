@@ -55,7 +55,8 @@ static void
 	while (i < total)
 	{
 		if (data->hist_max > 0)
-			ratio = (double)data->histogram[i] / (double)data->hist_max;
+			ratio = log(1.0 + (double)data->histogram[i])
+				/ log(1.0 + (double)data->hist_max);
 		else
 			ratio = 0.0;
 		px[i] = make_space_color(ratio);

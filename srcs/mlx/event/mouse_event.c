@@ -37,6 +37,16 @@ static int
 	return (1);
 }
 
+/**
+ * @brief    Convert pixel coordinates to complex plane coordinates.
+ *
+ * @param    data   Application state (viewport boundaries).
+ * @param    x      Pixel x-coordinate.
+ * @param    y      Pixel y-coordinate.
+ * @param    pos    Output array: pos[0] = real part, pos[1] = imaginary part.
+ * @note     Y-axis is inverted for standard sets (top = max_i).
+ *           Burning Ship uses non-inverted mapping.
+ */
 static void
 	calc_cursor_pos(t_data *data, int x, int y, double *pos)
 {
@@ -52,6 +62,16 @@ static void
 		pos[1] = data->math.max_i - ((double)y * h) / data->win_height;
 }
 
+/**
+ * @brief    Adapt max_iterations based on current zoom depth.
+ *
+ * Scales iteration count logarithmically between a floor value and MAX_ITER
+ * as the user zooms in, improving detail at deep zoom without wasting
+ * iterations at overview zoom.
+ *
+ * @param    data   Application state (viewport for zoom calculation).
+ * @note     Formula: iters = base + log(zoom)/log(10) * (MAX_ITER - base).
+ */
 void
 	update_adaptive_iter(t_data *data)
 {
@@ -73,6 +93,19 @@ void
 	data->fractal.max_iterations = iters;
 }
 
+/**
+ * @brief    Mouse scroll zoom handler.
+ *
+ * Implements cursor-centered zoom by remapping the complex plane boundaries
+ * so that the point under the cursor remains fixed after scaling.
+ *
+ * @param    keycode   Mouse button code (4 = scroll up, 5 = scroll down).
+ * @param    x         Cursor x-coordinate in pixels.
+ * @param    y         Cursor y-coordinate in pixels.
+ * @param    data      Application state.
+ * @return   1 (event consumed).
+ * @note   new_min_r = cr - (cr - min_r) * zf, where zf = 0.9 (in) or 1.1 (out).
+ */
 int
 	mouse(int keycode, int x, int y, t_data *data)
 {

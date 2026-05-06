@@ -1,0 +1,41 @@
+/**
+ * @mainpage fract'ol Documentation
+ * 
+ * @section intro_sec Introduction
+ * 
+ * Welcome to the Doxygen documentation for the **fract'ol** project!
+ * This project is a real-time interactive fractal explorer, developed as part of the 42 curriculum.
+ * It renders fractals by applying the escape-time algorithm and uses SIMD-accelerated multithreaded rendering.
+ * 
+ * @section arch_sec Architecture Overview
+ * 
+ * The project state is globally managed by the #t_data structure, which acts as the root 
+ * context for the entire program. It holds everything from window management to fractal mathematics.
+ * 
+ * **Key Data Structures:**
+ * - #t_data : The root application state containing all sub-structures.
+ * - #t_math : Complex plane viewport boundaries and rendering coordinates.
+ * - #t_fractal : Fractal configuration, max iterations, and function pointers for the active set.
+ * - #t_img : MiniLibX off-screen pixel buffer.
+ * - #t_perf : Performance metrics (FPS) and debug display state.
+ * - #t_color : RGB color triplet structure.
+ * 
+ * @section render_sec Rendering Pipeline
+ * 
+ * 1. **Initialization**: The program starts in main() and parses CLI arguments via init_fractol_set().
+ * 2. **Event Hooks**: Event listeners are registered in setup_hook() for keyboard (keypress()) and mouse (mouse(), julia_mouse_move()).
+ * 3. **Main Loop**: MiniLibX triggers the draw_fractol() loop continuously.
+ * 4. **Drawing**:
+ *    - If a redraw is needed (indicated by the `dirty` flag), the active fractal iteration function (e.g., is_mandelbrot()) is invoked.
+ *    - **Bonus SIMD**: For bonus rendering, SIMD implementations (e.g., simd_mandelbrot()) compute 4 pixels at once using `__m256d` AVX2 intrinsics.
+ *    - **Coloring**: Iteration counts are converted to smooth TRGB values via make_color().
+ *    - **Flushing**: The memory buffer is pushed to the X11 window in a single block transfer.
+ * 
+ * @section files_sec Key Headers
+ * 
+ * Explore the following headers to navigate the codebase:
+ * - struct.h : Contains all major data structures and application state.
+ * - define.h : Macros, configuration constants, and color definitions.
+ * - fractol.h : Mandatory function prototypes.
+ * - bonus.h : Multithreading and SIMD function prototypes.
+ */

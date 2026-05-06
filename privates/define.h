@@ -36,6 +36,14 @@ enum e_fractal_set
 # define INITIAL_ZOOM 4.0
 # define NUM_PALETTES 3
 # define BUDDHA_SAMPLES 500000
+# define BUDDHA_ITER 200
+# define BUDDHA_RAND_RES 100000
+# define BUDDHA_MIN_R -2.0
+# define BUDDHA_MAX_R 1.0
+# define BUDDHA_MIN_I -1.5
+# define BUDDHA_MAX_I 1.5
+# define BUDDHA_RANGE_R 3.0
+# define BUDDHA_RANGE_I 3.0
 
 # define BLACK		"\e[30m"
 # define RED		"\e[31m"
