@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: "*"
+  pull_request:
+    branches: "*"
+
+jobs:
+  check-norminette:
+    name: Norminette
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Run Norminette
+        uses: 42School/norminette@3.3.59
+        with:
+          args: 'srcs/ privates/ libft/
+
+  build:
+    name: Build Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install System Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc make xorg libxext-dev libx11-dev libbsd-dev
+
+      - name: Build Mandatory
+        run: make
+
+      - name: Build Bonus
+        run: make bonus
+
+      - name: Clean
+        run: make fclean

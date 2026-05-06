@@ -4,8 +4,8 @@
 
 Real-time interactive fractal explorer with SIMD-accelerated multithreaded rendering.
 
-![build](https://img.shields.io/badge/build-passing-brightgreen)
-![norminette](https://img.shields.io/badge/norminette-OK-brightgreen)
+[![build](https://img.shields.io/github/actions/workflow/status/TheoZerbibi/fract-ol/ci.yml?label=build)](https://github.com/TheoZerbibi/fract-ol/actions/workflows/ci.yml)
+[![norminette](https://img.shields.io/github/actions/workflow/status/TheoZerbibi/fract-ol/ci.yml?label=norminette)](https://github.com/TheoZerbibi/fract-ol/actions/workflows/ci.yml)
 ![language](https://img.shields.io/badge/language-C-blue)
 ![license](https://img.shields.io/badge/license-42-lightgrey)
 
