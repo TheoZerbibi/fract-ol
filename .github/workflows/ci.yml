@@ -17,7 +17,7 @@ jobs:
       - name: Run Norminette
         uses: 42School/norminette@3.3.59
         with:
-          args: 'srcs/ privates/ libft/
+          args: 'srcs/ privates/ libft/'
 
   build:
     name: Build Test
