@@ -13,16 +13,17 @@
 #include "bonus.h"
 
 static void
-	lower_set_name(char *set)
+	lower_set_name(char *dst, char *src)
 {
 	int	i;
 
 	i = 0;
-	while (set[i])
+	while (src[i])
 	{
-		set[i] = ft_tolower(set[i]);
+		dst[i] = ft_tolower(src[i]);
 		i++;
 	}
+	dst[i] = '\0';
 }
 
 static int
@@ -71,20 +72,21 @@ static int
 int
 	init_fractol_set(char *set, t_data *data)
 {
-	int	ret;
+	char	buf[32];
+	int		ret;
 
 	ret = write(1, "Bonus mode enabled\n", 19);
 	if (ret < 0)
 		return (-1);
-	lower_set_name(set);
-	if (ft_strcmp(set, "mandelbrot") == 0
-		|| (ft_strlen(set) == 1 && set[0] == 'm'))
+	lower_set_name(buf, set);
+	if (ft_strcmp(buf, "mandelbrot") == 0
+		|| (ft_strlen(buf) == 1 && buf[0] == 'm'))
 	{
 		data->fractal.draw = &mandelbrot_bonus;
 		init_mandelbrot(data);
 		data->set = MANDELBROT;
 	}
 	else
-		return (init_set_second(set, data));
+		return (init_set_second(buf, data));
 	return (TRUE);
 }

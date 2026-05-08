@@ -12,21 +12,6 @@
 
 #include "fractol.h"
 
-static int
-	check_period(double zr, double zi, double *old, int *period)
-{
-	if (zr == old[0] && zi == old[1])
-		return (1);
-	(*period)++;
-	if (*period > 8)
-	{
-		old[0] = zr;
-		old[1] = zi;
-		*period = 0;
-	}
-	return (0);
-}
-
 static void
 	ship_step(double *zr, double *zi, double *sq, double *c)
 {
@@ -56,7 +41,7 @@ static double
 	ft_memset(state, 0, sizeof(state));
 	while (sq[0] + sq[1] <= 4.0 && state[0] < data->fractal.max_iterations)
 	{
-		ship_step(&zr, &zi, sq, (double [2]){cr, ci});
+		ship_step(&zr, &zi, sq, (double []){cr, ci});
 		state[0]++;
 		if (check_period(zr, zi, old, &state[1]))
 			return ((double)data->fractal.max_iterations);

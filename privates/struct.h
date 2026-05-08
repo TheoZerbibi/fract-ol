@@ -53,12 +53,12 @@ union u_bit_hack
 /**
  * @brief    Performance metrics and debug display state.
  */
-typedef struct s_perf
+struct s_perf
 {
 	struct timeval	last_time; /**< Timestamp of the previous frame. */
 	double			fps; /**< Current frames per second. */
 	int				show_debug; /**< Debug overlay visibility toggle. */
-}	t_perf;
+};
 
 /**
  * @brief    MiniLibX image buffer descriptor.
@@ -66,7 +66,7 @@ typedef struct s_perf
  * Wraps the off-screen pixel buffer used for direct memory rendering.
  * Pixels are written to addr and flushed to the window in a single call.
  */
-typedef struct s_img
+struct s_img
 {
 	void	*image; /**< Opaque MiniLibX image pointer. */
 	char	*addr; /**< Raw pixel buffer (BGRA byte order). */
@@ -75,13 +75,13 @@ typedef struct s_img
 	int		endian; /**< Byte order (0 = little-endian, 1 = big-endian). */
 	int		width; /**< Image width in pixels. */
 	int		height; /**< Image height in pixels. */
-}	t_img;
+};
 
-typedef struct s_mlx
+struct s_mlx
 {
 	void	*mlx;
 	void	*win;
-}	t_mlx;
+};
 
 /**
  * @brief    Complex plane viewport boundaries.
@@ -91,7 +91,7 @@ typedef struct s_mlx
  *   re = min_r + px * (max_r - min_r) / win_width
  *   im = max_i - py * (max_i - min_i) / win_height
  */
-typedef struct s_math
+struct s_math
 {
 	double			min_r; /**< Left boundary (minimum real value). */
 	double			max_r; /**< Right boundary (maximum real value). */
@@ -100,12 +100,12 @@ typedef struct s_math
 	unsigned int	count; /**< Render pass counter. */
 	double			center_i; /**< Cached center imaginary coordinate. */
 	double			center_r; /**< Cached center real coordinate. */
-}	t_math;
+};
 
 /**
  * @brief    Fractal rendering configuration and function pointers.
  */
-typedef struct s_fractal
+struct s_fractal
 {
 	int		color_shift; /**< Active palette index. */
 	int		resolution_shift; /**< Pixel skip factor for low-res preview. */
@@ -116,7 +116,7 @@ typedef struct s_fractal
 	int		max_iterations; /**< Maximum escape-time iterations. */
 	int		(*draw)(struct s_data *data); /**< Pointer set's draw routine. */
 	double	(*iterate)(struct s_data *, double, double); /**< pointer to draw.*/
-}	t_fractal;
+};
 
 /**
  * @brief    Root application state.
@@ -124,7 +124,7 @@ typedef struct s_fractal
  * Contains all program state: window dimensions, MiniLibX handles,
  * fractal configuration, viewport math, and rendering buffers.
  */
-typedef struct s_data
+struct s_data
 {
 	int					win_width; /**< Window width in pixels. */
 	int					win_height; /**< Window height in pixels. */
@@ -139,6 +139,6 @@ typedef struct s_data
 	t_perf				perf; /**< FPS counter and debug state. */
 	unsigned int		*histogram; /**< Buddhabrot hit-count buffer. */
 	unsigned int		hist_max; /**< Maximum histog bin val for normaliza. */
-}	t_data;
+};
 
 #endif

@@ -12,21 +12,6 @@
 
 #include "fractol.h"
 
-static int
-	check_period(double zr, double zi, double *old, int *period)
-{
-	if (zr == old[0] && zi == old[1])
-		return (1);
-	(*period)++;
-	if (*period > 8)
-	{
-		old[0] = zr;
-		old[1] = zi;
-		*period = 0;
-	}
-	return (0);
-}
-
 static double
 	julia_loop(t_data *data, double zr, double zi)
 {

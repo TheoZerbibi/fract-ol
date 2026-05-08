@@ -13,16 +13,17 @@
 #include "fractol.h"
 
 static void
-	lower_set_name(char *set)
+	lower_set_name(char *dst, char *src)
 {
 	int	i;
 
 	i = 0;
-	while (set[i])
+	while (src[i])
 	{
-		set[i] = ft_tolower(set[i]);
+		dst[i] = ft_tolower(src[i]);
 		i++;
 	}
+	dst[i] = '\0';
 }
 
 static int
@@ -71,15 +72,17 @@ static int
 int
 	init_fractol_set(char *set, t_data *data)
 {
-	lower_set_name(set);
-	if (ft_strcmp(set, "mandelbrot") == 0
-		|| (ft_strlen(set) == 1 && set[0] == 'm'))
+	char	buf[32];
+
+	lower_set_name(buf, set);
+	if (ft_strcmp(buf, "mandelbrot") == 0
+		|| (ft_strlen(buf) == 1 && buf[0] == 'm'))
 	{
 		data->fractal.draw = &mandelbrot;
 		init_mandelbrot(data);
 		data->set = MANDELBROT;
 	}
 	else
-		return (init_set_second(set, data));
+		return (init_set_second(buf, data));
 	return (TRUE);
 }

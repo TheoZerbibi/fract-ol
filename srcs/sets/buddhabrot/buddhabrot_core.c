@@ -84,11 +84,11 @@ void
 	data->fractal.color_shift = 4;
 	data->fractal.resolution_shift = 0;
 	data->fractal.max_iterations = BUDDHA_ITER;
-	data->fractal.iterate = NULL;
+	data->fractal.iterate = &is_mandelbrot;
 	total = data->win_width * data->win_height;
 	data->histogram = (unsigned int *)malloc(sizeof(unsigned int) * total);
 	if (!data->histogram)
-		return ;
+		exit_init(data);
 	data->hist_max = 0;
 	ft_memset(data->histogram, 0, sizeof(unsigned int) * total);
 }

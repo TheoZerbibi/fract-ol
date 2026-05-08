@@ -51,6 +51,7 @@ COMMON_SOURCES := \
                 sets/burning_ship/burning_ship_core.c \
                 sets/julia/julia_core.c \
                 sets/buddhabrot/buddhabrot_core.c \
+                sets/buddhabrot/buddhabrot.c \
                 sets/phoenix/phoenix_core.c \
 
 MANDATORY_SOURCES := \
@@ -58,7 +59,6 @@ MANDATORY_SOURCES := \
                 sets/mandelbrot/mandelbrot.c \
                 sets/burning_ship/burning_ship.c \
                 sets/julia/julia.c \
-                sets/buddhabrot/buddhabrot.c \
                 sets/phoenix/phoenix.c \
 
 BONUS_SOURCES := \
@@ -80,14 +80,12 @@ BONUS_SOURCES := \
 #                                   FLAGS                                      #
 ################################################################################
 
-CFLAGS      := -Wall -Wextra -Werror -MMD -O3 -march=native
+CFLAGS      := -Wall -Wextra -Werror -std=c99 -MMD -O3 -march=native
 CC          := cc
 LDFLAGS     := -L $(MLX_FOLDER) -lm -lmlx -lXext -lX11
 DBG         := 0
 BNS         := 0
 
-NPROCS      := $(shell nproc 2>/dev/null || sysctl -n hw.ncpu 2>/dev/null || echo 1)
-MAKEFLAGS   += -j$(NPROCS)
 
 INCLUDES    := -I$(INCLUDES_FOLDER) -I$(MLX_FOLDER)
 
@@ -213,17 +211,17 @@ endif
 
 clean: header
 ifneq "$(wildcard $(LIBFT_FOLDER) )" ""
-	+$(MAKE) -C $(LIBFT_FOLDER) clean
+	-$(MAKE) -C $(LIBFT_FOLDER) clean
 endif
 ifneq "$(wildcard $(MLX_FOLDER) )" ""
-	+$(MAKE) -C $(MLX_FOLDER) clean --quiet
+	-$(MAKE) -C $(MLX_FOLDER) clean --quiet 2>/dev/null
 endif
 	rm -f $(OBJECTS)
 	rm -rf $(OBJECTS_FOLDER)
 
 fclean: clean
 ifneq "$(wildcard $(LIBFT_FOLDER) )" ""
-	+$(MAKE) -C $(LIBFT_FOLDER) fclean
+	-$(MAKE) -C $(LIBFT_FOLDER) fclean
 endif
 ifneq "$(wildcard $(MLX_FOLDER) )" ""
 	rm -rf $(MLX_FOLDER)

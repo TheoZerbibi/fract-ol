@@ -12,8 +12,4 @@
 asan:
 	$(MAKE) DBG=1 header makelib $(NAME)
 
-.DBG.$(DEBUG): 
-	rm -f .DBG.*
-	touch $@
-
 .PHONY: asan

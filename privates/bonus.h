@@ -22,6 +22,17 @@
 # define MAX_THREADS	128
 
 typedef struct s_thread_data	t_thread_data;
+typedef struct s_simd_result	t_simd_result;
+
+/**
+ * @brief    SIMD lane results: iteration counts and frozen modulus.
+ */
+struct s_simd_result
+{
+	__m256i	iters; /**< Per-lane escape iteration counts (4 x int64). */
+	__m256d	sq; /**< Per-lane |z|^2 frozen at escape. */
+	__m256d	prev_esc; /**< Accumulated escape mask. */
+};
 
 struct s_thread_data
 {
@@ -45,10 +56,12 @@ int		julia_bonus(t_data *data);
 int		buddhabrot_bonus(t_data *data);
 int		phoenix_bonus(t_data *data);
 
-void	put_pixel_simd(t_thread_data *info, int x, int y, long long it);
-void	write_4px(t_thread_data *info, int x, int y, long long int *it);
+void	extract_smooth_px(t_simd_result *res, int max, double *smooth);
+void	write_4px(t_thread_data *info, int x, int y, double *smooth);
 void	render_thread_row_remainder(t_thread_data *info,
 			int y, double ci, int x);
+void	freeze_sq(t_simd_result *res, __m256d sum, __m256d bounded);
+void	compute_smooth(long long *it, double *sq, int max, double *out);
 void	simd_mandelbrot(t_thread_data *info, int y, double ci);
 void	simd_julia(t_thread_data *info, int y, double ci);
 void	simd_burningship(t_thread_data *info, int y, double ci);

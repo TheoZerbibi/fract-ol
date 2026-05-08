@@ -85,7 +85,7 @@ int
 	data.dirty = 1;
 	if (!init_mlx(&data) || !init_img(&data))
 		exit_init(&data);
-	if (argc < 2 || argc > 4 || init_fractol_set(argv[1], &data) == -1)
+	if (argc < 2 || init_fractol_set(argv[1], &data) == -1)
 		exit_usage(&data);
 	if (data.set == JULIA)
 		parse_julia_args(argc, argv, &data);

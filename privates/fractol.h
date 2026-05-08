@@ -13,7 +13,6 @@
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
-# include <stdio.h>
 # include <math.h>
 # include <unistd.h>
 # include <stdlib.h>
@@ -47,6 +46,8 @@ int		phoenix(t_data *data);
 int		buddhabrot(t_data *data);
 int		draw_debug_overlay(t_data *data, int col);
 int		make_space_color(double ratio);
+int		render_set(t_data *data);
+int		check_period(double zr, double zi, double *old, int *period);
 double	fast_log2(double val);
 double	lerp(double a, double b, double t);
 double	is_mandelbrot(t_data *data, double cr, double ci);
