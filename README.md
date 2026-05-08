@@ -84,7 +84,7 @@ Three distinct palettes cycle via the Shift key. Colors are computed by scaling 
 - **Adaptive iteration count**: scales `max_iterations` logarithmically with zoom depth
 
 ![Bonus fractal](https://cdn.lacaleche.cc/public/fractol/burning_ship.png)
-![Color shift](https://cdn.lacaleche.cc/public/fractol/palettes.png)
+![Color shift](https://cdn.lacaleche.cc/public/fractol/palettes.png?v=2)
 
 ---
 
