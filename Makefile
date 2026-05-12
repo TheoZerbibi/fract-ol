@@ -82,7 +82,8 @@ BONUS_SOURCES := \
 
 CFLAGS      := -Wall -Wextra -Werror -std=c99 -MMD -O3 -march=native
 CC          := cc
-LDFLAGS     := -L $(MLX_FOLDER) -lm -lmlx -lXext -lX11
+LDFLAGS     := -L $(MLX_FOLDER)
+LDLIBS      := -lm -lmlx -lXext -lX11 -lft
 DBG         := 0
 BNS         := 0
 
@@ -95,7 +96,8 @@ INCLUDES    := -I$(INCLUDES_FOLDER) -I$(MLX_FOLDER)
 
 ifneq "$(wildcard $(LIBFT_FOLDER) )" ""
         INCLUDES += -I$(LIBFT_FOLDER)includes
-        LDFLAGS  += -L $(LIBFT_FOLDER) -lft
+        LDFLAGS  += -L $(LIBFT_FOLDER)
+		LDLIBS   += -lft
 endif
 
 ifneq (,$(wildcard ./.BNS.*))
@@ -108,7 +110,7 @@ endif
 ifeq ($(BNS), 1)
         SOURCES := $(COMMON_SOURCES) $(BONUS_SOURCES)
         CFLAGS  += -pthread -DBONUS -D_GNU_SOURCE
-        LDFLAGS += -lpthread
+        LDLIBS += -lpthread
         BONUS   := $(BNS)
 else
         SOURCES := $(COMMON_SOURCES) $(MANDATORY_SOURCES)
@@ -164,10 +166,10 @@ all: header
 	+$(MAKE) $(NAME)
 
 $(NAME): $(OBJECTS)
-	printf "\t\t$(NO_COLOR)All objects for $(INFO_COLOR)$(PROJECT_NAME) $(NO_COLOR)where successfully created.\n"
-	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^ $(LDFLAGS)
-	printf "%-50s \r"
-	printf "\t\t$(INFO_COLOR)$(NAME)$(NO_COLOR) successfully compiled. $(OK_COLOR)✓$(NO_COLOR)\n"
+	printf "\n$(NO_COLOR)All objects for $(INFO_COLOR)$(PROJECT_NAME) $(NO_COLOR)where successfully created.\n"
+	printf "\n$(OK_COLOR)[LINKING]$(NO_COLOR) $^\033[m\n" ""
+	$(CC) $(CFLAGS) $(INCLUDES) $(LDFLAGS) -o $@ $^ $(LDLIBS)
+	printf "\n$(INFO_COLOR)$(NAME)$(NO_COLOR) successfully compiled. $(OK_COLOR)✓$(NO_COLOR)\n"
 
 bonus: header
 	+$(MAKE) setup_mlx
@@ -187,9 +189,8 @@ bonus: header
 
 $(OBJECTS_FOLDER)%.o: $(SOURCES_FOLDER)%.c .DBG.$(DEBUG) .BNS.$(BONUS)
 	mkdir -p $(@D)
+	printf "$(WARN_COLOR)\t[Compiling] $(NO_COLOR)%s %b\033[m" "$<" "$(WARN_COLOR)\n"
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
-	printf "%-50s \r"
-	printf "\t\t\t$(NO_COLOR)Creating $(INFO_COLOR)%-30s $(OK_COLOR)✓$(NO_COLOR)\r" "$@"
 
 $(MLX_FOLDER)/libmlx.a:
 	+$(MAKE) -C $(MLX_FOLDER) all --quiet
